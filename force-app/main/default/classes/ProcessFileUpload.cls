@@ -39,6 +39,7 @@ public without sharing class ProcessFileUpload implements Queueable {
             SELECT ContentDocumentId, Title, Document_Status__c
             FROM ContentVersion
             WHERE ContentDocumentId IN :contentDocumentIds
+            AND IsLatest = true
         ];
 
         // Step 3: Prepare Opportunity updates
@@ -88,16 +89,31 @@ public without sharing class ProcessFileUpload implements Queueable {
         for (ContentVersion cv : contentVersions) {
             String normalizedTitle = cv.Title.replaceAll('\\.[^.]+$', ''); // Removes file extension
 
-            if (titleToFieldMap.containsKey(normalizedTitle)) {
-                Id oppId = contentDocToOppMap.get(cv.ContentDocumentId);
-                if (oppId != null) {
-                    Opportunity opp = oppUpdates.containsKey(oppId) ? oppUpdates.get(oppId) : new Opportunity(Id = oppId);
-                    String oppFieldName = titleToFieldMap.get(normalizedTitle);
-                    
-                    opp.put(oppFieldName, cv.Document_Status__c);
-                    oppUpdates.put(oppId, opp);
+            for (String key : titleToFieldMap.keySet()) {
+                if (normalizedTitle.toLowerCase().startsWith(key.toLowerCase())) {
+                    Id oppId = contentDocToOppMap.get(cv.ContentDocumentId);
+                    if (oppId != null) {
+                        Opportunity opp = oppUpdates.containsKey(oppId) ? oppUpdates.get(oppId) : new Opportunity(Id = oppId);
+
+                        String oppFieldName = titleToFieldMap.get(key);
+                        opp.put(oppFieldName, cv.Document_Status__c);
+                        oppUpdates.put(oppId, opp);
+
+                        break;  // Only update the first matching field
+                    }
                 }
             }
+
+            // if (titleToFieldMap.containsKey(normalizedTitle)) {
+            //     Id oppId = contentDocToOppMap.get(cv.ContentDocumentId);
+            //     if (oppId != null) {
+            //         Opportunity opp = oppUpdates.containsKey(oppId) ? oppUpdates.get(oppId) : new Opportunity(Id = oppId);
+            //         String oppFieldName = titleToFieldMap.get(normalizedTitle);
+                    
+            //         opp.put(oppFieldName, cv.Document_Status__c);
+            //         oppUpdates.put(oppId, opp);
+            //     }
+            // }
         }
 
         System.debug('### Opportunity Updates: ' + oppUpdates);
