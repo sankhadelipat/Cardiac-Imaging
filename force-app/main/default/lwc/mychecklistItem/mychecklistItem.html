@@ -1,0 +1,297 @@
+<template>
+    <div class="card">
+        <!-- Progress Bar -->
+        <div class="progress-card">
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 100%;">
+                    <div class="progress-bar-fill" style={progressStyle}></div>
+                </div>
+            </div>
+            <p>{progressPercentage}%</p>
+        </div>
+
+        <!-- 1.Task List for Medical Supervision Packet (MSA) -->
+        <div class="task-list">
+            <h2>Required </h2>
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Medical Supervision Packet (MSA)</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="medicalSupervision" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{medicalSupervisionStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- 2.Task List for Parking Acknowledgement (PA) -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Parking Acknowledgement (PA)</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="mou" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{mouStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- 3. Task List for Radiopharmaceutical Order -->
+        <!-- <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <div class="task-details">
+                        
+                        <label class="task-name" for="file-input-state"> Radiopharmaceutical Standing Order  </label>
+                        <input type="file" onchange={handleFileChange} id="file-input-state" data-id="radiopharmaceutical" />
+                    
+                       <p>{radiopharmaceuticalStatus}</p> 
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+
+        <!-- 4. Task List for HIPAA BA Agreement -->
+        <!-- <div class="task-list">
+           
+            <ul>
+                <li class="task-item">
+                    <div class="task-details">
+                       
+                        <label class="task-name" for="file-input-cms"> HIPAA Business Associate Agreement (BAA) </label>
+                        <input type="file" onchange={handleFileChange} id="file-input-cms" data-id="HIPAAgreement" />
+                      
+                       <p>{HIPAAgreementStatus}</p> 
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+
+
+        <!-- 5. Task List for ABIM Screenshot -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">ABIM Screenshot</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="codeOfConduct" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{codeOfConductStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+
+
+
+        <!-- 6. Task List for CMS 855b form -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">CMS 855b form</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="CMS855b" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{CMS855bStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- 7. Task List for ACLS -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">ACLS</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="ACLS" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{ACLSStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 8.Task List for Medical License -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Medical License</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="medicalLicense" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{medicalLicenseStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 9 Task List for Board Certifications -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Board Certifications</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="boardCertifications" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{boardCertificationsStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 10. Task List for Certification Board of Nuclear Cardiology 
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Certification Board of Nuclear
+                        Cardiology</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="nuclearCardiology" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{nuclearCardiologyStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+           -->
+        <!-- 11. Task List for Current Radioactive Materials License 
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Current Radioactive Materials
+                        License</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="radioactiveMaterial" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{radioactiveMaterialStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>-->
+
+        <!-- 12.Task List for Vetting Report Completed and Approval to Interpret 
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Vetting Report Completed and Approval to
+                        Interpret</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="vettingReport" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{vettingReportStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>-->
+
+        <!-- 13. Task List for Parking Drawing
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Parking Drawing (Google Maps)</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="parkingDrawing" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{parkingDrawingStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+
+        <!-- 14. Task List for Parking Verification Form -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Parking Verification Form</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="parkingVerification" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{parkingVerificationStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 15. Task List for Due diligence 
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Due diligence</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="dueDiligence" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+
+                        <div class="file-selector-status">{dueDiligenceStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+
+        <!-- 16. Task List for W9 -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">W9</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="W9" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{W9Status}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 17. Task List for Direct Deposit form -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Direct Deposit Form (ACH)</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="ddf" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{ddfStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 18. Task List for Direct Deposit form -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">OIG Checklist</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="oig" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{oigStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>

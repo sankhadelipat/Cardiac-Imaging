@@ -1,0 +1,91 @@
+<template>
+    <div class="card">
+        <!-- Progress Bar -->
+        <div class="progress-card">
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 100%;">
+                    <div class="progress-bar-fill" style={progressStyle}></div>
+                </div>
+            </div>
+            <p>{progressPercentage}%</p>
+        </div>
+        <!-- Task List for Radioactive Materials 
+        <div class="task-list">
+            <h2>Optional </h2>
+
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-lebel">Current Radioactive Materials License</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="crmLicense" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{crmLicenseStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+         -->
+        <!-- Task List for Phy Availability & Date -->
+        <div class="task-list">
+            <h2>Optional </h2>
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Physician Availability and Date
+                        Preferences</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="physicianAvailability"
+                            accept={acceptedFormats} record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{physicianAvailabilityStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Task List for Direct Deposit form -->
+        <!-- <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <div class="task-details">
+                       
+                        <label class="task-name" for="file-input-ddf">Direct Deposit form</label>
+                        <input type="file" onchange={handleFileChange} id="file-input-ddf" data-id="depositForm" />
+                      
+                       <p>{depositFormStatus}</p> 
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+
+        <!-- Task List for Physician CV -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Physician CV</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="physicianCv" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{physicianCvStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Task List for Physician CV -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">SPECT EHR Export</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="spectEhr" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{spectEhrStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>

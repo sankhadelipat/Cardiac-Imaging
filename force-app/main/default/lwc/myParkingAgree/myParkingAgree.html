@@ -1,0 +1,67 @@
+<template>
+    <div class="card">
+        <template if:true={isParkingAgreementRequired}>
+            <!-- Progress Bar -->
+            <div class="progress-card">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 100%;">
+                        <div class="progress-bar-fill" style={progressStyle}></div>
+                    </div>
+                </div>
+                <p> {progressPercentage}% </p>
+            </div>
+
+
+            <!-- Task List for Radioactive Materials -->
+            <div class="task-list">
+                <h2>Parking Agreement</h2>
+                <ul>
+                    <li class="task-item">
+                        <label class="file-selector-label">Parking Agreement</label>
+                        <div class="task-details">
+                            <lightning-file-upload class="file-selector" name="ParkingAgreement"
+                                accept={acceptedFormats} record-id={recordId} onuploadfinished={handleFileChange}
+                                multiple>
+                            </lightning-file-upload>
+                            <div class="file-selector-status">{ParkingAgreementStatus}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Task List for Phy Availability & Date -->
+            <div class="task-list">
+                <ul>
+                    <li class="task-item">
+                        <label class="file-selector-label">W9</label>
+                        <div class="task-details">
+                            <lightning-file-upload class="file-selector" name="W92" accept={acceptedFormats}
+                                record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                            </lightning-file-upload>
+                            <div class="file-selector-status">{W92Status}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Task List for Physician CV -->
+            <div class="task-list">
+                <ul>
+                    <li class="task-item">
+                        <label class="file-selector-label">ACH</label>
+                        <div class="task-details">
+                            <lightning-file-upload class="file-selector" name="ACH2" accept={acceptedFormats}
+                                record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                            </lightning-file-upload>
+                            <div class="file-selector-status">{ACH2Status}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </template>
+
+        <template if:false={isParkingAgreementRequired}>
+            <p>Parking Agreement not required</p>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,33 @@
+.lightning-studio{
+	color : blue;
+}
+/* ******************************************** */
+
+.task-name {
+    /* background-color: #007bff; */
+	 background-color: #0056b3;
+     border: 1px solid #0056b3;
+    color: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    width: 60%;
+    padding: 10px 30px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.task-name:hover {
+    background-color: #8BB7F0; /* Darker blue for hover effect */
+     border: 1px solid #8BB7F0;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.button-container{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}

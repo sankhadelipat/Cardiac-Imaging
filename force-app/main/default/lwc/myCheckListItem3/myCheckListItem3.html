@@ -1,0 +1,61 @@
+<template>
+    <div class="card">
+        <!-- Progress Bar -->
+        <div class="progress-card">
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 100%;">
+                    <div class="progress-bar-fill" style={progressStyle}></div>
+                </div>
+            </div>
+            <p>{progressPercentage}%</p>
+        </div>
+        <!-- 10. Task List for Certification Board of Nuclear Cardiology -->
+        <div class="task-list">
+            <h2>Interpretation Checklist </h2>
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Certification Board of Nuclear
+                        Cardiology</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="nuclearCardiology" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{nuclearCardiologyStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 11. Task List for Current Radioactive Materials License -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Current Radioactive Materials
+                        License</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="radioactiveMaterial" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{radioactiveMaterialStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 12.Task List for Vetting Report Completed and Approval to Interpret -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">Vetting Report Completed and Approval to
+                        Interpret</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="vettingReport" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{vettingReportStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>  
+    </div>
+</template>

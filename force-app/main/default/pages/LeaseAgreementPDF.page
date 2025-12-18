@@ -1,0 +1,1037 @@
+<apex:page renderAs="pdf" controller="AgreementPDFController" applyHtmlTag="false" applyBodyTag="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <head>
+        <style type="text/css" media="print">
+            body {
+            font-family: 'Calibri Light', Calibri, sans-serif;
+            font-size: 11px;
+            }
+            @page {
+                margin-top: 100px;
+                margin-bottom: 70px;
+                @top-left {
+                    content: element(header);
+                }
+                @bottom-center {
+                    content: element(footer);
+                }
+            }
+            @page no-header-footer {
+                margin-top: 40px;
+                margin-bottom: 30px;
+                @top-left {
+                    content: none;
+                }
+                @bottom-center {
+                    content: none;
+                }
+            }
+            div.header {
+                padding: 10px;
+                position: running(header);
+                width: 100%;
+            }
+            div.footer {
+                display: block;
+                padding: 5px;
+                position: running(footer);
+                color: #b5b5b5;
+                font-size: 12px;
+                text-align: center;
+            }
+            div.footer p {
+                margin: 0;
+            }
+            div.content {
+                margin: 0 auto;
+                font-size: 12px;
+            }
+            div.no-header-footer {
+                page: no-header-footer;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .page-heading {
+                font-weight: bold;
+            }
+            .positive-margin {
+                margin-top: 40px;
+            }
+            .negative-margin {
+                margin-top: -40px;
+            }
+            .align-center {
+            	text-align: center;
+            }
+            .flex-table {
+            	display:flex;
+            	justify-content: center;
+            }
+            .compact-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            .compact-table td {
+                padding: 4px 0;
+            }
+            .loose-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            .loose-table td {
+                padding: 8px 0;
+            }
+            .label {
+                text-align: left;
+                width: 20%;
+            }
+            .value {
+                text-align: left;
+            }
+            .tableWithBorders table {
+                width: 55%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            .tableWithBorders table, .tableWithBorders th, .tableWithBorders td {
+                border: 0.5px solid black;
+            }
+            .tableWithBorders th, .tableWithBorders td {
+                padding: 2px 4px;
+                text-align: left;
+            }
+            .contact-info {
+                margin-top: 16px;
+                margin-bottom: 16px;
+            }
+            .contact-info p {
+                font-weight: bold;
+                margin: 4px 0;
+            }
+            ul {
+            	list-style-type: none;
+            }
+            ul li {
+            	margin-top: 6px;
+            }
+            .list-with-gap li {
+                margin: 4px 0;
+            }
+            .list-left-shift{
+                margin-left: 0px;
+            }
+            .agreement-list li {
+                margin-left: -40px;
+                margin-top: 16px;
+                margin-bottom: 4px;
+                list-style-position: inside;
+            }
+            .agreement-list li ol li{
+                margin-left: -40px;
+                margin-top: 8px;
+                margin-bottom: 4px;
+            }
+            .agreement-list li ol li ol li {
+                margin-left: -26px;
+                margin-top: 4px;
+                margin-bottom: 4px;
+            }
+            .agreement-list p {
+                margin: 4px 0;
+            }
+            .code-of-conduct-list li {
+                margin-top: 16px;
+                margin-bottom: 4px;
+            }
+            .alpha-list {
+                list-style-type: lower-alpha;
+            }
+            .roman-list {
+                list-style-type: lower-roman;
+            }
+            .bullet-list {
+                list-style-type: disc;
+            }
+            .signature-line {
+                display: block;
+                border-bottom: 0.5px solid black;
+                width: 150px;
+            }
+            .signature-text {
+                margin-top: 40px;
+            }
+            .signature-text td {
+            	text-align: center;
+            	height: 70px;
+            }
+            .blue-line {
+                border: none;
+                border-top: 3px solid #0066CC;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            .orange-line {
+                border: none;
+                border-top: 3px solid #FFA500;
+                margin-top: 10px;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            .orange-bar {
+                background-color: #FFA500; /* Orange color */
+                height: 25px; /* Adjust the height as needed */
+                font-size: 16px; /* Adjust font size */
+                color: white; /* Text color */
+                line-height: 25px; /* Matches the height for vertical centering */
+            }
+            .pageNumber::after {
+                content: counter(page);
+            }
+            .totalPages::after {
+                content: counter(pages);
+            }
+        </style>
+    </head>
+
+    <!-- Header Section -->
+    <div class="header">
+        <img src="{!$Resource.CompanyLogo}" alt="Company Logo" style="width: 180px; height: auto;" />
+    </div>
+    
+    <!-- Footer Section -->
+    <div class="footer">
+        <div>    
+            <div style="text-align: right;">
+                <span style="margin-right:109px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span>
+                <span style="color: #000000; font-size: 10px;">Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
+            </div>
+            <div>
+            <p>(800) 998-2035 | www.mobilecardiacpet.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Body Section -->
+    <div class="content">
+        <!-- Page 1 of 1 -->
+        <p class="negative-margin" style="font-size: 16px;">
+            Mobile Cardiac PET/CT Lease &amp; Service Agreement
+        </p>
+
+        <hr class="blue-line" />
+        
+        <p>This Service Agreement (“Agreement”) is made and entered into this <apex:outputText value=" {0,date,MMMM d, yyyy}">
+            <apex:param value="{!opp.Contract_Effective_Date__c}"/></apex:outputText> (“Effective Date”), by and between Cardiac 
+            Imaging, Inc. (“CII”), a Delaware corporation, and the Provider specified below (hereinafter “Customer”). CII and Customer may be 
+            referred to herein as a “Party” or collectively as “Parties”. The Parties agree that CII will provide and Customer will accept 
+            equipment, personnel, and other services and radiopharmaceuticals which will be delivered to and operated at the Customer’s location, 
+            subject to the terms and conditions specified herein.</p>
+
+        <hr class="blue-line" />    
+
+        <div class="flex-table">
+            <table class="loose-table">
+                <tr>
+                    <td class="label">Provider:</td>
+                    <td class="value">{!opp.Account_Name__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Imaging Site:</td>
+                    <td class="value">{!opp.Street_Address__c}, {!opp.City__c}, {!opp.State__c} {!opp.Zip_Code__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Equipment:</td>
+                    <td class="value">CII shall lease to Customer a Mobile Cardiac PET/CT system to include the uMI 550 digital PET/CT 
+                                scanner along with shipping, installation, maintenance, and radioactive calibration sources, and glassware. 
+                                Ancillary equipment and software will include, MedData/Invia 4DM cloud based PET/CT software for processing, 
+                                viewing, archiving and report generation. Remote 12 lead ECG system. Welch Allen model 901058 patient monitor 
+                                system. Rubidium generator infusion system.</td>
+                </tr>
+                <tr>
+                    <td class="label">Services:</td>
+                    <td class="value">Accreditation services and fees associated with such accreditation. Scheduling, pre-certification and 
+                                insurance assistance (e.g., training and support). Radioactive materials license services and fees. Radiation Safety 
+                                Officer (RSO). </td>
+                </tr>
+                <tr>
+                    <td class="label">Supplies:</td>
+                    <td class="value">Included in the daily lease rate are all sterile supplies excluding pharmacological stress 
+                        agents (Regadenoson). </td>
+                </tr>
+                <tr>
+                    <td class="label">Personnel:</td>
+                    <td class="value">Certified Nuclear Medicine Technologist and an ACLS Paramedic assigned
+                        to work under the direct supervision of the Customer.</td>
+                </tr>
+                <tr>
+                    <td class="label">Service Days (8 Hours/Day) </td>
+                    <td class="value">{!opp.Days_per_Month__c * 12} per year</td>
+                </tr>
+                <tr>
+                    <td class="label">Scheduled Days: </td>
+                    <td class="value">____ Monday ____Tuesday____Wednesday_____Thursday____Friday</td>
+                </tr>
+                <tr>
+                    <td class="label">Frequency:</td>
+                    <td class="value">____Every Week____Every Other Week____Monthly</td>
+                </tr>
+                <tr>
+                    <td class="label">Daily Lease Rate:</td>
+                    <td class="value">${!opp.Daily_Lease_Rate__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Additional Time:</td>
+                    <td class="value">For any day that exceeds 8 hours, Customer will be billed $[_____] for each 30-minute increment over an 
+                        8-hour day.</td>
+                </tr>
+                <tr>
+                    <td class="label">Radiopharmaceuticals:</td>
+                    <td class="value">${!opp.Rubidium_Rate_per_injection__c} for each injection (2 injections per exam). </td>
+                </tr>
+                <tr>
+                    <td class="label">Pharmacological Stress Agent:</td>
+                    <td class="value">${!opp.Regadenoson__c} per injection (4 doses per injection). If Customer is supplying its own Regadenoson agent, 
+                        check here: _____.</td>
+                </tr>
+                <tr>
+                    <td class="label">Term:</td>
+                    <td class="value">Ends 36 months after the first clinical day of service (“Go Live Date”)</td>
+                </tr>
+            </table>
+        </div>
+        
+        <hr class="blue-line" />
+
+        <ol class="agreement-list">
+
+            <li>
+                <u>Equipment:</u>
+                <p>
+                    CII shall lease to Customer the Equipment for each designated Service Day. CII shall be responsible for preparing the Equipment, 
+                    including providing preliminary testing of Equipment prior to use, performing equipment and safety checks as necessary, technical 
+                    support and maintaining satisfactory levels of supplies and materials.
+                </p>
+            </li>
+     
+            <li>
+                <u>Personnel:</u>
+                <p>
+                    CII shall lease to Customer the Personnel for each designated Service Day. The Certified Nuclear Medicine Technologist will 
+                    perform diagnostic imaging procedures at the Customer’s location of business and will conduct such procedures in accordance 
+                    with procedures established by the Equipment manufacturer and CII. The ACLS Paramedic shall assist in scanning and stress 
+                    test operations in accordance with procedures established by the Equipment manufacturer and CII. In-service and applications 
+                    training will be on-site and available for Personnel during all Service Days. Customer shall supervise the Personnel in 
+                    performance of the services in compliance with applicable laws.
+                </p>
+            </li>
+        
+            <li>
+                <u>Radiopharmaceuticals and Pharmacological Stress Agent:</u>
+                <p>
+                    Customer will purchase from CII all required
+                    radiopharmaceuticals necessary to perform the exams, based on the prescription issued by Customer’s physicians.
+                    Customer may purchase from CII the Regadenoson agent necessary to perform the exams, based on the prescription
+                    issued by Customer’s physicians, however Customer may also provide their own Regadenoson agent. The Parties
+                    acknowledge that such radiopharmaceuticals and Regadenoson are being made available by CII to Customer at
+                    market competitive rates. Customer shall not bill a patient or third-party payor, including but not limited to
+                    Medicare, Medicaid, or any other federal health care program, for radiopharmaceuticals in an amount greater than
+                    the amount paid by the Customer to CII for such radiopharmaceuticals pursuant to this Agreement. Any discount
+                    offered under this Agreement is intended to satisfy the requirements of 42 C.F.R. § 1001.952(h). If Customer is an
+                    entity that reports its costs on a cost report required by the Department of Health and Human Services or a State
+                    health care program, Customer must fully and accurately report the discount in the applicable cost report and must
+                    provide, upon request by the Secretary of Health and Human Services or a State agency, the invoice, coupon, or
+                    statement provided by CII reporting the discount. If Customer is not a cost-reporting entity, health maintenance
+                    organization, or competitive medical plan, Customer must provide, upon request by the Secretary of Health and
+                    Human Services or a State agency, the invoice, coupon, or statement provided by CII reporting the discount.
+                </p>
+            </li>
+        
+            <li>
+                <u>Medical Radioactive Materials License (“RAML”): </u>
+                <p>
+                    During the term of this Agreement, CII shall be responsible
+                    for obtaining (or updating, as applicable) a federal or state RAML, fees associated with such license, physicist
+                    services, all recordkeeping and quality assurance needed to maintain a RAML. CII shall not be held responsible for
+                    any such remedial actions, fees or penalties if such state violations are a direct result of the actions by Customer's
+                    employees or subcontractors. CII’s RAML shall be on site and available during all Service Days. Customer agrees to
+                    become an Authorized User on CII's RAML or to contract with an existing Authorized User on CII's RAML who will
+                    supervise in the operation of the Equipment, the administration of the radiopharmaceuticals and read or over read
+                    or quality read the Tests performed and interpreted by Customer, if required by applicable state law. In the event
+                    Customer does not become an Authorized User, he/she shall be deemed to be a “supervised person” within the
+                    meaning of applicable RAML laws and agrees to perform all duties required by such laws. Customer agrees to comply
+                    with all terms and conditions on CII's RAML, including CII's policies and procedures related to use of radioactive
+                    materials in the performance of the exams.
+                </p>
+            </li>
+        
+            <li>
+                <u>Insurance:</u>
+                <p>
+                    Both Parties agree to maintain, at their sole cost and expense, public liability insurance,
+                    professional liability insurance and workers compensation based on the state's statutory minimum requirements.
+                </p>
+            </li>
+        
+            <li>
+                <u>Term and Termination:</u>
+                <ol class="alpha-list">
+                    <li>
+                        <u>Term:</u>
+                        <p>
+                            This Agreement shall be effective as of the Effective Date and shall continue for a period of 36 months
+                            after the Go Live Date (the “Initial Term”). Following the Initial Term, the Agreement shall automatically renew for
+                            successive 12-month terms (each a “Renewal Term”) and collectively with the Initial Term, the “Term”). Either Party
+                            may elect not to renew this Agreement at the end of the term by giving written notice of non-renewal to the other
+                            Party at least sixty (60) days prior to the expiration of the then current term.
+                        </p>
+                    </li>
+                    <li>
+                        <u>Termination:</u>
+                        <p>
+                            This Agreement may not be cancelled or terminated except as expressly provided herein. In
+                            the event Customer fails to perform any obligation set forth herein to be performed by Customer, such failure shall
+                            constitute a breach of this Agreement, and CII may, at its option and without otherwise limiting CII’s rights against
+                            Customer with respect to such breach, terminate this Agreement. A breach of this Agreement shall also include, but
+                            not be limited to, Customer becoming the subject of any proceeding in bankruptcy or becoming insolvent. CII shall
+                            provide notice of breach in writing to Customer, and Customer shall have thirty (30) days from the date of such
+                            notice to cure such breach. Customer hereby agrees that Customer's obligation to pay any and all amounts owing
+                            hereunder shall be absolute and unconditional and shall survive any termination or expiration of this Agreement.
+                        </p>
+                    </li>
+                    <li>
+                        <u>Effect of Termination:</u>
+                        <p>
+                            Upon the expiration or earlier termination of this Agreement, the Parties shall
+                            thereafter be automatically relieved and released from all further liabilities and obligations hereunder, except for (i)
+                            liabilities and obligations accruing prior to the date of expiration or earlier termination and (ii) liabilities and
+                            obligations contained herein which are expressly made to extend beyond the term, all of which shall survive the
+                            expiration or earlier termination of this Agreement.
+                        </p>
+                    </li>
+                </ol>
+            </li>
+
+            <li>
+                <u>Payment Terms:</u>
+                <p>
+                    Customer shall pay to CII the fees described herein, regardless of collection from a patient
+                    or private or governmental payor. Customer shall be solely responsible for billing and collecting any amounts due
+                    for services provided by the Customer to its patients.
+                </p>
+                <ol class="alpha-list">
+                    <li>
+                        <p>
+                            Commencing on the Go Live Date, CII shall provide an invoice to the Customer each month under the
+                            Agreement for all fees due, commencing as of the Commencement Date. All CII invoices that Customer does not
+                            dispute within 25 days of the date of the invoice will be deemed accurate and accepted in whole by Customer.
+                            Customer shall pay to CII by ACH the entire invoice amount within 25 days of the date of such invoice. Customer
+                            agrees to complete all required ACH forms contemporaneous with the effective date of this Agreement.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Customer shall pay to CII interest on all overdue invoices, commencing from the due date of such invoice
+                            to the date of payment thereof, at a rate equal to the lesser of (a) 1.5% percent per month, or (b) the maximum
+                            permitted by law. If applicable, Customer agrees to pay any attorney and/or collection agency fees.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            CII may temporarily discontinue service to Customer if amounts owed to CII are not received within 25 days
+                            of the date of the invoice and at CII’s option may discontinue services indefinitely until such time as Customer’s
+                            payments are current. In the event of nonpayment by Customer within 25 days of the invoice, Customer may be
+                            required to provide a Personal Guarantee for all unpaid invoices and all fees owed by Customer under this
+                            Agreement.
+                        </p>
+                    </li>
+                </ol>
+            </li>
+        
+            <li>
+                <u>Scheduling and Cancellation Charge:</u>
+                <p>
+                    Customer must schedule any Service Day at least thirty (30) business
+                    days in advance by providing written notice to CII. Customer must provide to CII at least ten (10) business days’
+                    notice in writing for cancellation of any Service Day. In the event Customer does not provide timely notice specified
+                    by this paragraph, Customer will be assessed a cancellation fee equal to 50% of the Daily Rate that would otherwise
+                    be payable pursuant to the terms of this Agreement.
+                </p>
+            </li>
+        
+            <li>
+                <u>Restrictive Covenant:</u>
+                <p>
+                    Customer recognizes that CII has entered into this Agreement in reliance upon the
+                    covenants and assurances made by Customer herein. Customer agrees that, during the term of this Agreement plus
+                    one (1) year following the termination of this Agreement, Customer and Customer's employees and agents shall not
+                    engage any other corporation or entity to provide the services, equipment, and procedures that are the subject
+                    matter of this Agreement, nor shall Customer undertake to purchase or any other way install or perform the services
+                    and studies provided by CII to Customer under this Agreement on its own accord; provided, however, that the
+                    prohibitions of this paragraph shall not apply when it is medically expedient and necessary to transfer a patient.
+                </p>
+            </li>
+        
+            <li>
+                <u>Taxes:</u>
+                <p>
+                    Customer agrees to comply with all federal, state and local laws, regulations and orders relating to
+                    this Agreement and to pay any and all taxes based on the income of Customer or based upon the services rendered
+                    by Customer, including sales taxes.
+                </p>
+            </li>
+        
+            <li>
+                <u>Indemnity:</u>
+                <p>
+                    CII shall not be responsible for damages caused by wrongful acts of Customer's employees or
+                    subcontractors or resulting from Customer's failure to exercise reasonable care in fulfilling its responsibilities under
+                    this Agreement. Customer agrees to assume all responsibility for controlling access to areas near the Equipment and
+                    Customer will indemnify and hold harmless CII from and against any and all liabilities including for damages arising
+                    from or related to Customer's failure to control such access; provided, however, that Customer shall not be
+                    responsible for damages caused by wrongful acts of CII's employees or resulting from CII's failure to exercise
+                    reasonable care in fulfilling its responsibility under this Agreement.
+                </p>
+            </li>
+
+            <li>
+                <u>Medical Responsibility:</u>
+                <p>
+                    Neither CII nor any of its personnel shall in any way undertake the practice of
+                    medicine, render medical opinions or services, or in any way deal with patients other than to provide those specific
+                    non-medical ancillary and technical maintenance services required for operation of the Equipment. Additionally:
+                </p>
+                <ol class="alpha-list">
+                    <li>
+                        <p>
+                            Customer acknowledges that it will not look to CII for any medical services or judgment whatsoever and
+                            shall always have, full medical responsibility for its patients during all nuclear imaging procedures;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Nothing in this Agreement shall impair or impede a physician's relationship with a particular patient or limit
+                            the physician's medical judgment exercised for and on behalf of such patient;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Customer shall be responsible for providing a licensed physician, together with such other personnel as
+                            may, in the reasonable judgment of Customer, be needed to assist the physician, who during the period when
+                            Customer' s patients are in the Equipment, perform or cause to be performed all tasks of general supervision,
+                            diagnosis and patient care;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            The physicians designated by Customer shall be solely responsible for reading and interpreting the data
+                            generated by the use of the Equipment;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            The physicians shall further be responsible for communicating the results of the exams to referring
+                            physicians and appropriate members of Customer's staff and to patients;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            CII shall not be responsible for the storage and recall of patient studies in the future;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Notwithstanding any other provision of this Agreement, Customer agrees that CII shall have no liability or
+                            responsibility whatsoever for interpretations or other professional services rendered by any Authorized User with
+                            which Customer contracts, and Customer agrees to hold CII harmless from any and all such liability, whether resulting
+                            from a claim by a patient or from any other cause.
+                        </p>
+                    </li>
+                </ol>
+            </li>
+        
+            <li>
+                <u>Confidentiality:</u>
+                <p>
+                    During the term of this Agreement and for a period of two (2) years following the
+                    termination, expiration, or nonrenewal of this Agreement, each Party agrees to keep confidential the other Party's
+                    confidential information and trade secrets except when disclosure may be required by law. For purposes of this
+                    Agreement, confidential information shall not include: (i) information which is or becomes known to the general
+                    public; or (ii) information which a Party obtains from another source that is not required to maintain such
+                    information in confidence.
+                </p>
+            </li>
+        
+            <li>
+                <u>Legislative, Regulatory or Administrative Changes:</u>
+                <p>
+                    In the event there shall be a change in the Medicare or
+                    Medicaid statutes or any other legal requirements or the adoption of new federal or state legislation of which shall
+                    make this Agreement unlawful, the Parties will, within thirty (30) days of such legislation, meet and use their best
+                    efforts to enter into a new arrangement that complies with all legal requirements and that maintains the economic
+                    neutrality of this arrangement.
+                </p>
+            </li>
+
+            <li>
+                <u>Customer Responsibilities:</u>
+                <ol class="alpha-list">
+                    <li>
+                        <p>
+                            Customer shall provide to CII utilities, telephone, fax machines, wireless internet access, restrooms,
+                            common areas, and provide parking or access to such services so that CII personnel may provide the services
+                            described herein.
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Customer shall keep appropriate patient records as to all nuclear exams performed by CII pursuant to this
+                            Agreement, and shall make such records available to CII for inspection at any reasonable time; and
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Customer shall provide radiation badges for Customer's employees who may require them; and
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            CII shall comply with Customer's policy and procedure guidelines provided in writing to CII.
+                        </p>
+                    </li>
+                </ol>
+            </li>
+        
+            <li>
+                <u>Independent Contractor Status:</u>
+                <p>
+                    In performing their respective duties and obligations under this Agreement,
+                    the Parties are independent contractors, and as such they shall remain professionally and economically independent
+                    of each other. The Parties are not, and shall not be deemed to be, joint venturers, partners, agents or employees of
+                    each other.
+                </p>
+            </li>
+        
+            <li>
+                <u>Medical Records:</u>
+                <p>
+                    Customer shall maintain and retain medical records to satisfy requirements of applicable
+                    federal and state laws and regulations, including in connection with the performance of services hereunder. To the
+                    maximum extent permitted under applicable laws, medical records created hereunder shall be maintained and
+                    retained in one or more electronic records systems that are accurate and accessible for later reference. Customer
+                    shall maintain the confidentiality of all records generated as a result of providing medical services to patients. The
+                    utilization and disclosure of such records shall be consistent with all applicable laws, rules, regulations, ethical codes,
+                    and privileges. Customer shall maintain all guidelines associated with Health Insurance Portability and Accountability
+                    Act of 1996 and its implementing regulations, as amended.
+                </p>
+            </li>
+        
+            <li>
+                <u>Regulatory Compliance:</u>
+                <p>
+                    The Parties represent and warrant that they and their employees and/or agents (as
+                    applicable) are familiar with the requirements imposed by federal, state and local laws applicable to this Agreement
+                    and that, in the performance of this Agreement, they will fully comply with these and all applicable statutes, rules
+                    and regulations with respect thereto, including, without limitation, the Physician Self-Referral Law, 42 U.S.C. §§
+                    1395, et seq.; federal Anti-Kickback Statute, 42 U.S.C. §1320a-7b(b); and all applicable laws and regulations in the
+                    jurisdiction where the services are provided hereunder. Accordingly, any remuneration pursuant to this Agreement
+                    is in no way intended to be in exchange for business generated between either Party or either Party and any
+                    physician or healthcare provider affiliated with the Customer. It is not a requirement of this Agreement that
+                    Customer or its employees and/or agents generate any business to CII. The Parties agree and acknowledge that the
+                    compensation terms contained in this Agreement are set at fair market value, are commercially reasonable, have
+                    been negotiated in an arms-length transaction and have not been determined in a manner that takes into account
+                    the volume or value of any referrals or business otherwise generated between the Parties for which payment may
+                    be made in whole or in part under federal healthcare programs. Customer shall notify CII immediately upon
+                    becoming aware of any breach of obligations under this section. Customer and its employees and/or agents shall
+                    participate in any compliance, legal, or anti-corruption training reasonably required by CII. To the extent that CII is
+                    acting as a “business associate” as that term is defined under the Health Information Portability and Accountability
+                    Act and regulations promulgated thereunder, the parties agree to enter into a business associate agreement in the
+                    form attached hereto as Exhibit A and incorporated by reference herein.
+                </p>
+            </li>
+
+            <li>
+                <u>Force Majeure:</u>
+                <p>
+                    CII shall not be liable for any delay due to causes beyond CII’s reasonable control, including,
+                    but not limited to, Acts of God, strike, acts of government or compliance with any governmental rules or regulations,
+                    public riot, adverse weather conditions, or act of a public enemy. Services will not be provided on the following
+                    Holidays observed by CII: New Year’s Day, Memorial Day, Independence Day, Labor Day, Thanksgiving Day,
+                    Christmas Eve, and Christmas Day.
+                </p>
+            </li>
+
+            <li>
+                <u>Jurisdiction:</u>
+                <p>
+                    This Agreement shall be governed by and construed in accordance with the laws of the State
+                    of Illinois without giving effect to any choice of law rules. Any action or proceeding arising from or in connection
+                    with this Agreement shall be brought solely in the federal or state courts located in DuPage County, and each of the
+                    Parties hereto hereby consents to the jurisdiction of those courts for any such action or proceeding.
+                </p>
+            </li>
+
+            <li>
+                <u>Entire Agreement:</u>
+                <p>
+                    Except with respect to any pre-existing confidentiality agreements between the Parties,
+                    this Agreement is the entire agreement between the Parties with respect to the subject matter hereof and
+                    supersedes any and all other agreements, either oral or in writing, between them. There are no oral promises,
+                    conditions, representations, understandings, interpretations or terms of any kind as conditions or inducements to
+                    the execution hereof or in effect among the Parties. No custom or trade usage, nor course of conduct among the
+                    Parties, shall be relied upon to vary the terms hereof. This Agreement may not be amended, and no provision hereof
+                    shall be waived, except by a writing signed by all the Parties to this Agreement, which states that it is intended to
+                    amend or waive a provision of this Agreement. Any waiver of any rights or failure to act in a specific instance shall
+                    relate only to that instance and shall not be construed as an agreement to waive any rights or failure to act in any
+                    other instance, whether or not similar.
+                </p>
+            </li>
+
+            <li>
+                <u>Successors and Assigns:</u>
+                <p>
+                    Neither Party may assign any of its rights or obligations under this Agreement to
+                    any third party without the express, written consent of the other Party; provided, however, that CII may assign its
+                    interest in this Agreement in connection with a change of control, merger or sale of substantially all of its business
+                    or that portion of its business pertaining to the subject matter of this Agreement, whether by merger, sale of stock,
+                    sale of assets or otherwise. This Agreement shall inure to the benefit of and be binding upon the successors and
+                    assigns of the Parties.
+                </p>
+            </li>
+
+            <li>
+                <u>Notices:</u>
+                <p>
+                    Any notice required or permitted under the terms of this Agreement or required by law must be
+                    in writing and sent by overnight air courier to CII's corporate headquarters, the Imaging Site or other address on file
+                    for the Customer for that purpose.
+                </p>
+            </li>
+
+            <li>
+                <u>Counterparts; Electronic Signature:</u>
+                <p>
+                    The Agreement may be executed in one or more counterparts, each of
+                    which shall be an original, but all of which taken together shall constitute one and the same agreement. Facsimile
+                    or electronic transmission of any signed original counterpart shall be deemed the same as the delivery of an original.
+                    Each Party agrees that the electronic signatures of the Parties included in the Agreement are intended to
+                    authenticate this writing and to have the same force and effect as manual signatures.
+                </p>
+            </li>
+        
+        </ol>
+
+        <p>
+            By execution hereof, the signer hereby certifies that he/she has read and understands this Agreement, is duly
+            authorized to execute this Agreement and each of the Parties agree to be bound by its terms.
+        </p>
+
+        <div class="flex-table">
+            <table class="loose-table">
+                <tr>
+                    <td>CII: Cardiac Imaging, Inc.</td>
+                    <td class="value">Customer: {!opp.Account_Name__c}</td>
+                </tr>
+                <tr>
+                    <td>By:_____________________________</td>
+                    <td class="value">By:_____________________________</td>
+                </tr>
+                <tr>
+                    <td>Printed Name: Sam Kancherlapalli</td>
+                    <td class="value">Printed Name:_____________________________</td>
+                </tr>
+                <tr>
+                    <td>Title: CEO</td>
+                    <td class="value">Title:______________________________</td>
+                </tr>
+                <tr>
+                    <td>Date:_____________________________</td>
+                    <td class="value">Date:_____________________________</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="align-center">
+            <p>
+                <strong>Exhibit A</strong>
+            </p>
+            <p>
+                <strong>Business Associate Agreement</strong>
+            </p>
+        </div>
+
+        <div class="orange-bar">
+            Business Associate Agreement
+        </div>
+        
+        <p>
+            This Business Associate Agreement (“Agreement”) is entered into by and between Cardiac Imaging, Inc.
+            (“Business Associate”) and between {!opp.Account_Name__c} (“Covered Entity”), which is a covered entity under
+            the Health Insurance Portability and Accountability Act of 1996 (“HIPAA”). The parties are entering into this
+            Agreement to assist the Covered Entity in complying with HIPAA, and to set forth Business Associate’s
+            obligations under the Health Information Technology for Economic and Clinical Health Act of 2009 (the
+            “HITECH Act”), and 45 CFR Parts 160 and 164, Subpart C (the “Security Rule”), Subpart D (the “Data Breach
+            Notification Rule”), and Subpart E (the “Privacy Rule”) (collectively, the “HIPAA Regulations”) and applicable
+            State law. Terms used in this Agreement have the meanings given to them in the HIPAA Regulations. This
+            Agreement applies to any Protected Health Information Business Associate receives from Covered Entity,
+            or creates, receives or maintains on behalf of Covered Entity, under its agreements with Covered Entity
+            (the “Principal Agreements”).
+        </p>
+
+        <p>AGREEMENT</p>
+
+        <ol class="agreement-list">
+
+            <li>
+                <p>
+                    Business Associate may use and disclose Covered Entity’s Protected Health Information to provide
+                    Covered Entity with the goods and services contemplated by the Principal Agreements. Except as expressly
+                    provided below, this Agreement does not authorize Business Associate to make any use or disclosure of
+                    Protected Health Information that Covered Entity would not be permitted to make.
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    Business Associate will:
+                </p>
+                <ol class="alpha-list">
+                    <li>
+                        <p>
+                            Not use or further disclose Covered Entity’s Protected Health Information except as permitted by
+                            the Principal Agreements or this Agreement, or as required by law;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Use appropriate safeguards, and comply, where applicable, with the HIPAA Security Rule with
+                            respect to electronic protected health information, to prevent use or disclosure of Covered Entity’s
+                            Protected Health Information other than as provided for by the Principal Agreements or this Agreement;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Report to Covered Entity any use or disclosure of Covered Entity’s Protected Health Information
+                            not provided for by the Principal Agreements or this Agreement of which it becomes aware, including
+                            breaches of unsecured protected health information as required by the Data Breach Notification Rule (45
+                            CFR § 164.410), and any security incident of which Business Associate becomes aware. Notwithstanding
+                            the foregoing, Covered Entity and Business Associate hereby agree that Business Associate receives
+                            frequent, routine, unsuccessful attempts to penetrate or compromise its systems, including pings, port
+                            scans and log on attempts, and that this constitutes Business Associate’s report and notification to Covered
+                            Entity of such events, and no further reporting of such Security Incidents is required unless these attempts
+                            result in an unauthorized access to, use, disclosure, destruction or loss of electronic Protected Health
+                            Information, Business Associate will not report them to Covered Entity
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Ensure that any of Business Associate’s subcontractors that create, receive, maintain, or transmit
+                            protected health information on behalf of the Business Associate agree in writing to the same restrictions
+                            and conditions that apply to Business Associate with respect to such information, including compliance
+                            with the HIPAA Security Rule with respect to electronic protected health information;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Make any Protected Health Information in a designated record set available to Covered Entity to
+                            enable Covered Entity to meet its obligation to provide access to the information in accordance with 45
+                            CFR § 164.524
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Make any Protected Health Information in a designated record set available for amendment and
+                            incorporate any amendments to Protected Health Information as directed by Covered Entity pursuant to
+                            45 CFR § 164.526;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Make available to Covered Entity the information concerning disclosures that Business Associate
+                            makes of Covered Entity’s Protected Health Information required to enable Covered Entity to provide an
+                            accounting of disclosures in accordance with 45 CFR § 164.528;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            To the extent that Business Associate carries out Covered Entity’s obligations under the Privacy
+                            Rule, comply with the requirements of the Privacy Rule that apply to Covered Entity in the performance of
+                            such obligations;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Make Business Associate’s internal practices, books, and records relating to Business Associate’s
+                            use and disclosure of Protected Health Information received from Covered Entity, or created or received
+                            by Business Associate on behalf of Covered Entity, available to the Secretary of the United States
+                            Department of Health and Human Services for purposes of determining Covered Entity’s compliance with
+                            the HIPAA Regulations;
+                        </p>
+                    </li>
+                    <li>
+                        <p>
+                            Upon termination of the Principal Agreements, return or destroy all Covered Entity’s Protected
+                            Health Information that Business Associate still maintains in any form and retain no copies of such
+                            information or, if return or destruction is not feasible, extend the protections of this Agreement to that
+                            information and limit further use and disclosure to those purposes that make the return or destruction of
+                            the information infeasible.
+                        </p>
+                    </li>
+                </ol>
+            </li>
+
+            <li>
+                <p>
+                    If Covered Entity determines that Business Associate has violated a material term of this Agreement,
+                    and if Business Associate fails to cure such violation within 30 days of delivery of written notice thereof,
+                    Covered Entity may immediately terminate this Agreement.
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    Business Associate may use Covered Entity’s Protected Health Information for the management and
+                    administration of Business Associate’s company and to carry out Business Associate’s own legal
+                    responsibilities, and Business Associate may disclose the information for these purposes if Business
+                    Associate is required to do so by law, or if Business Associate obtains reasonable assurances from the
+                    recipient of the information (1) that it will be held confidentially, and used or further disclosed only as
+                    required by law or for the purpose for which it was disclosed to the recipient, and (2) that the recipient will
+                    notify Business Associate of any instances of which the recipient is aware in which the confidentiality of the
+                    information is breached.
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    Business Associate may use Covered Entity’s Protected Health Information for data aggregation, as
+                    permitted by the Privacy Rule.
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    Business Associate may de-identity Covered Entity’s Protected Health Information, in compliance with
+                    the requirements of 45 C.F.R. Section 164.514. Business Associate shall be the owner of such de-identified
+                    data.
+                </p>
+            </li>
+
+            <li>
+                <p>
+                    This Agreement is to be interpreted in accordance with HIPAA, the HITECH Act, and the regulations
+                    promulgated thereunder, as amended from time to time.
+                </p>
+            </li>
+
+        </ol>
+
+        <hr class="orange-line" />
+
+        <div class="page-break"></div>
+
+        <p>
+            IN WITNESS WHEREOF this Business Associate Agreement is executed as of the date first set forth
+            above by a duly authorized representative of each Party.
+        </p>
+
+        <div class="flex-table">
+            <table class="loose-table">
+                <tr>
+                    <td>BUSINESS ASSOCIATE: Cardiac Imaging, Inc.</td>
+                    <td class="value">COVERED ENTITY</td>
+                </tr>
+                <tr>
+                    <td>Signature:_____________________________</td>
+                    <td class="value">Signature:_____________________________</td>
+                </tr>
+                <tr>
+                    <td>Printed Name: Mr. Sam Kancherlapalli</td>
+                    <td class="value">Printed Name:_____________________________</td>
+                </tr>
+                <tr>
+                    <td>Title: CEO</td>
+                    <td class="value">Title:______________________________</td>
+                </tr>
+                <tr>
+                    <td>Date:_____________________________</td>
+                    <td class="value">Date:_____________________________</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="align-center">
+            <p>
+                <strong>ADDENDUM 1</strong>
+            </p>
+            <p>
+                <strong>Mobile Cardiac PET/CT Landlord Acknowledgement</strong>
+            </p>
+        </div>
+
+        <p><strong>Document Purpose:</strong> In partnership with {!opp.Account_Name__c}, Cardiac Imaging, Inc. (CII) will place a mobile unit at 
+            {!opp.Street_Address_1__c}, {!opp.City_1__c}, {!opp.State_1__c}, {!opp.Zip_Code_1__c} to perform cardiac PET/CT exams. These exams use 
+            radioactive material, which remains fully contained within our mobile trailer at all times. This document is to make you aware of this 
+            setup and confirm that CII assumes full responsibility for all aspects related to the radioactive material. 
+        </p>
+
+        <p><strong>Exam Purpose:</strong> Cardiac PET/CT exams are widely recognized as the gold standard for diagnosing coronary artery disease, 
+            playing a vital role in delivering timely and effective care. By providing the services on-site, patients can be under the direct 
+            supervision of their provider and have access to industry-leading technology – leading to faster results, improved care, and better 
+            health outcomes.
+        </p>
+
+        <p>CII Responsibilities: </p>
+
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; CII takes full responsibility for handling, removing, and disposing of all radiopharmaceuticals. </p>
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; CII holds and maintains all required licenses and follows all relevant regulations. </p>
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; All radioactive material remains inside the mobile trailer; none will be brought into your facility. </p>
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; CII will provide its Certificate of Insurance (COI) upon request. </p>
+
+        <p>Landlord Responsibilities: </p>
+
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; You acknowledge that CII’s mobile trailer will be on your premises. </p>
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; You agree to grant CII personnel access to the trailer when it is on your premises. </p>
+        
+        <div class="flex-table signature-text">
+            <table class="loose-table">
+                <tr>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Landlord</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Print Name</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Title</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Date</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Radiation Safety Officer</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Print Name</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Title</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Date</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>CII Management</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Print Name</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Title</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Date</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</apex:page>

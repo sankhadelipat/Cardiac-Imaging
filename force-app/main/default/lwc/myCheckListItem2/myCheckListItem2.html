@@ -1,0 +1,45 @@
+<template>
+    <div class="card">
+        <!-- Progress Bar -->
+        <div class="progress-card">
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="width: 100%;">
+                    <div class="progress-bar-fill" style={progressStyle}></div>
+                </div>
+            </div>
+            <p> {progressPercentage}% </p>
+        </div>
+
+
+        <!-- Task List for CMS Approval Letter -->
+        <div class="task-list">
+            <h2>Approvals </h2>
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label">CMS Approval Letter </label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="cmsApproval" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{cmsApprovalStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Task List for State Approval Letter -->
+        <div class="task-list">
+            <ul>
+                <li class="task-item">
+                    <label class="file-selector-label" for="file-input-state">State Approval Letter</label>
+                    <div class="task-details">
+                        <lightning-file-upload class="file-selector" name="stateApproval" accept={acceptedFormats}
+                            record-id={recordId} onuploadfinished={handleFileChange} multiple>
+                        </lightning-file-upload>
+                        <div class="file-selector-status">{stateApprovalStatus}</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</template>

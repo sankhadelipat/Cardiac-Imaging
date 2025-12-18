@@ -1,0 +1,40 @@
+<template>
+    <div class="card">
+        <!-- Conditionally Render Content -->
+        <template if:true={isParkingAgreementRequired}>
+            <!-- Progress Bar -->
+            <div class="progress-card">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 100%;">
+                        <div class="progress-bar-fill" style={progressStyle}></div>
+                    </div>
+                </div>
+                <p>{progressPercentage}%</p>
+            </div>
+
+            <!-- Task List for Parking Agreement Letter -->
+            <div class="task-list">
+
+                <h2>Parking Agreement</h2>
+                <ul>
+                    <li class="task-item">
+                        <div class="task-details">
+                            <label class="task-name" for="file-input-parking">Upload Agreement</label>
+                            <input
+                                type="file"
+                                onchange={handleFileChange}
+                                id="file-input-parking"
+                                data-id="parkingAgreement"
+                            />
+                            <p>{parkingAgreementStatus}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </template>
+
+        <template if:false={isParkingAgreementRequired}>
+            <p>Parking Agreement not required</p>
+        </template>
+    </div>
+</template>

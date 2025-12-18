@@ -1,0 +1,204 @@
+<template>
+    <lightning-card>
+        <div class="container">
+            <form>
+
+                <!-- Account Information -->
+                <lightning-card title="Account Information">
+                    <div class="slds-p-around_medium">
+                        <lightning-combobox label="Proposal or Agreement Request" name="ProposalorAgreementRequset"
+                            value={fieldValues.ProposalorAgreementRequset}
+                            options={picklistOptions.ProposalorAgreementRequset} onchange={handleChange}
+                            data-id="ProposalorAgreementRequset" required>
+                        </lightning-combobox>
+                        <lightning-input type="text" label="Contracting Entity Legal Name" name="Contracting"
+                            value={fieldValues.Contracting} onchange={handleChange} data-id="ContractingName"
+                            required></lightning-input>
+                        <lightning-dual-listbox name="users" label="Select recipents" source-label="Available Users"
+                            selected-label="Selected Users" field-level-help="Select one or more recipent"
+                            options={userOptions} value={valueUser} onchange={handleChange} data-id="users" required>
+                        </lightning-dual-listbox>
+                        <lightning-input type="text" label="Signatory1 Name" name="Signatory"
+                            value={fieldValues.Signatory} onchange={handleChange} data-id="signatoryName"
+                            required></lightning-input>
+                        <lightning-input type="Email" label="Signatory1 Email" name="Signatory1Email"
+                            value={fieldValues.Signatory1Email} onchange={handleChange} data-id="signatoryEmail"
+                            required></lightning-input>
+                        <lightning-input type="text" label="Signatory1 Signing Responsibilities"
+                            name="Signatory1SigningResponsibilities"
+                            value={fieldValues.Signatory1SigningResponsibilities} onchange={handleChange}
+                            data-id="signatorySigningResponsibilities" required></lightning-input>
+                        <lightning-input type="text" label="Signatory2 Name" name="Signatory2Name"
+                            value={fieldValues.Signatory2Name} onchange={handleChange}>
+                        </lightning-input>
+                        <lightning-input type="Email" label="Signatory2 Email" name="Signatory2Email"
+                            value={fieldValues.Signatory2Email} onchange={handleChange}>
+                        </lightning-input>
+                        <lightning-input type="text" label="Signatory2 Signing Responsibilities"
+                            name="Signatory2SigningResponsibilities"
+                            value={fieldValues.Signatory2SigningResponsibilities} onchange={handleChange}>
+                        </lightning-input>
+                        <lightning-input type="text" label="Supervising Physician Names (list all)"
+                            name="SupervisingPhysicianName" value={fieldValues.SupervisingPhysicianName}
+                            onchange={handleChange} required>
+                        </lightning-input>
+                        <lightning-input type="text" label="Street Address" name="StreetAddress" data-id="Street"
+                            value={opportunityData.Street_Address__c} disabled></lightning-input>
+                        <lightning-input type="text" label="City" name="City" data-id="City"
+                            value={opportunityData.City__c} disabled></lightning-input>
+                        <lightning-input type="text" label="State" name="State" data-id="std"
+                            value={opportunityData.State__c} disabled></lightning-input>
+                        <lightning-input type="text" label="Zip Code" name="ZipCode" data-id="zip"
+                            value={opportunityData.Zip_Code__c} disabled></lightning-input>
+                        <lightning-input type="text" label="Account Phone Number" name="AccountPhoneNumber"
+                            value={opportunityData.Account_Phone_Number__c} disabled></lightning-input>
+                        <lightning-combobox label="Customer Type" name="CustomerType" value={fieldValues.CustomerType}
+                            options={picklistOptions.customerType} onchange={handleChange} data-id="customerType"
+                            required>
+                        </lightning-combobox>
+                    </div>
+                </lightning-card>
+                <hr style="height: 3px; border: none; background-color: rgba(0, 0, 0, 0.2); margin: 20px 0;">
+
+                <!-- Imaging Location -->
+                <lightning-card title="Imaging Location">
+                    <div class="slds-p-around_medium">
+                        <lightning-input type="checkbox" name="SameasAccountAddress" label=" Same as above"
+                            data-id="chk" onchange={handleChange}></lightning-input>
+                        <template if:false={isSectionHidden}>
+                            <lightning-input type="text" label="Street Address" name="StreetAddress1"
+                                value={fieldValues.StreetAddress1} onchange={handleChange} data-id="streetAdderess"
+                                required></lightning-input>
+                            <lightning-input type="text" label="City" name="City1" value={fieldValues.City1}
+                                onchange={handleChange} data-id="City1" required>
+                            </lightning-input>
+                            <lightning-input type="text" label="State" name="State1" value={fieldValues.State1}
+                                onchange={handleChange} data-id="State" required>
+                            </lightning-input>
+                            <lightning-input type="text" label="Zip Code" name="ZipCode1" value={fieldValues.ZipCode1}
+                                onchange={handleChange} data-id="Zipcode" required></lightning-input>
+                        </template>
+                        <lightning-input type="text" label="Comments" name="Comments" value={fieldValues.Comments}
+                            onchange={handleChange} data-id="Comment" required></lightning-input>
+                    </div>
+                </lightning-card>
+
+                <hr style="height: 3px; border: none; background-color: rgba(0, 0, 0, 0.2); margin: 20px 0;">
+
+                <!-- Contract Terms -->
+                <lightning-card title="Contract Terms">
+                    <div class="slds-p-around_medium">
+                        <lightning-input type="number" label="Days per Month" name="DaysperMonth"
+                            value={fieldValues.DaysperMonth} onchange={handleChange} data-id="DaysperMonth"
+                            required></lightning-input>
+                        <lightning-input type="number" label="Supervision Rate" name="SupervisionRate"
+                            value={opportunityData.Supervision_Rate__c} disabled data-id="SupervisionRate" required>
+                        </lightning-input>
+                    </div>
+                </lightning-card>
+
+                <hr style="height: 3px; border: none; background-color: rgba(0, 0, 0, 0.2); margin: 20px 0;">
+
+                <!-- Building -->
+                <lightning-card title="Building">
+                    <div class="slds-p-around_medium">
+                        <lightning-input type="text" label="Building Owner" name="BuildingOwner"
+                            value={fieldValues.BuildingOwner} onchange={handleChange} data-id="BuildingOwner"
+                            required></lightning-input>
+                        <lightning-input type="text" label="Building Owner Email" name="BuildingOwnerEmail"
+                            value={fieldValues.BuildingOwnerEmail} onchange={handleChange} data-id="BuildingOwnerEmail"
+                            required>
+                        </lightning-input>
+                        <lightning-input type="text" label="Who Provided You With The Building Owner Information"
+                            name="SourceforBuildingOwnerConfirmation"
+                            value={fieldValues.SourceforBuildingOwnerConfirmation} onchange={handleChange}
+                            data-id="SourceforBuildingOwnerConfirmation" required>
+                        </lightning-input>
+                        <lightning-combobox label="Parking Agreement Required" name="ParkingAgreement"
+                            value={fieldValues.ParkingAgreement} options={picklistOptions.parkingAgreementType}
+                            onchange={handleChange} data-id="ParkingAgreement" required>
+                        </lightning-combobox>
+                    </div>
+                </lightning-card>
+
+                <hr style="height: 3px; border: none; background-color: rgba(0, 0, 0, 0.2); margin: 20px 0;">
+
+                <!-- Due Diligence -->
+                <lightning-card title="Due Diligence">
+                    <div class="slds-p-around_medium">
+                        <lightning-input type="number" label="Monthly SPECT Volume" name="MonthlySPECTVolume"
+                            value={fieldValues.MonthlySPECTVolume} onchange={handleChange} data-id="MonthlySPECTVolume"
+                            required></lightning-input>
+                        <lightning-input type="number" label="Traditional Medicare %age" name="TraditionalMedicareAge"
+                            value={fieldValues.TraditionalMedicareAge} step="0.01" onchange={handleChange}
+                            data-id="TraditionalMedicareAge" required>
+                        </lightning-input>
+                    </div>
+                </lightning-card>
+
+                <hr style="height: 3px; border: none; background-color: rgba(0, 0, 0, 0.2); margin: 20px 0;">
+
+                <!-- Top Payors -->
+                <lightning-card title="Top Payors">
+                    <div class="slds-p-around_medium">
+                        <b>Payor 1</b>
+                        <lightning-input type="text" label="Payor" name="Payor" value={fieldValues.Payor}
+                            onchange={handleChange} data-id="Payor" required></lightning-input>
+                        <lightning-combobox label="Plan Type" name="PlanType" value={fieldValues.PlanType}
+                            options={picklistOptions.planType} onchange={handleChange} data-id="PlanType" required>
+                        </lightning-combobox>
+                        <lightning-input type="number" label="Percent of Patients" name="PercentofPatients"
+                            value={fieldValues.PercentofPatients} step="0.01" onchange={handleChange}
+                            data-id="PercentofPatients" required></lightning-input>
+                    </div>
+                    <div class="slds-p-around_medium">
+                        <b>Payor 2</b>
+                        <lightning-input type="text" label="Payor" name="Payor2" value={fieldValues.Payor2}
+                            onchange={handleChange} data-id="Payor2" required></lightning-input>
+                        <lightning-combobox label="Plan Type" name="PlanType2" value={fieldValues.PlanType2}
+                            options={picklistOptions.planType} onchange={handleChange} data-id="PlanType2" required>
+                        </lightning-combobox>
+                        <lightning-input type="number" label="Percent of Patients" name="PercentofPatients2"
+                            value={fieldValues.PercentofPatients2} step="0.01" onchange={handleChange}
+                            data-id="PercentofPatients2" required></lightning-input>
+                    </div>
+                    <div class="slds-p-around_medium">
+                        <b>Payor 3</b>
+                        <lightning-input type="text" label="Payor" name="Payor3" value={fieldValues.Payor3}
+                            onchange={handleChange} data-id="Payor3" required></lightning-input>
+                        <lightning-combobox label="Plan Type" name="PlanType3" value={fieldValues.PlanType3}
+                            options={picklistOptions.planType} onchange={handleChange} data-id="PlanType3" required>
+                        </lightning-combobox>
+                        <lightning-input type="number" label="Percent of Patients" name="PercentofPatients3"
+                            value={fieldValues.PercentofPatients3} step="0.01" onchange={handleChange}
+                            data-id="PercentofPatients3" required></lightning-input>
+                    </div>
+                </lightning-card>
+
+                <lightning-card title="Comments">
+                    <div class="slds-p-horizontal_medium slds-p-bottom_medium">
+                        <lightning-textarea label="Comments" name="Comment1s"
+                            placeholder="Enter any additional comments..." value={fieldValues.Comment1s}
+                            onchange={handleChange}>
+                        </lightning-textarea>
+                    </div>
+                </lightning-card>
+
+                <!-- ABIM Screenshot Buttons -->
+                <div class="button-container">
+                    <label class="task-name" for="file-input-cms">ABIM Screenshot</label>
+                    <input type="file" onchange={handleFileChange} id="file-input-cms" data-id="codeOfConduct"
+                        required />
+                </div>
+
+                <!-- Save and Cancel Buttons -->
+                <div class="button-container">
+                    <lightning-button class="slds-m-top_medium slds-m-right_small" variant="neutral" label="Cancel"
+                        onclick={handleCancel}></lightning-button>
+                    <lightning-button class="slds-m-top_medium" label="Submit" variant="brand" onclick={handleSubmit}>
+                    </lightning-button>
+                </div>
+            </form>
+        </div>
+    </lightning-card>
+</template>

@@ -1,0 +1,1619 @@
+<apex:page renderAs="pdf" controller="AgreementPDFController" applyHtmlTag="false" applyBodyTag="false" showHeader="false" sidebar="false" docType="html-5.0">
+    <head>
+        <style type="text/css" media="print">
+            body {
+            font-family: 'Calibri Light', Calibri, sans-serif;
+            font-size: 11px;
+            }
+            @page {
+                margin-top: 100px;
+                margin-bottom: 70px;
+                @top-left {
+                    content: element(header);
+                }
+               /* @bottom-center {
+                    content: element(footer);
+                }*/
+            }
+            @page no-header-footer {
+                margin-top: 40px;
+                margin-bottom: 30px;
+                @top-left {
+                    content: none;
+                }
+                @bottom-center {
+                    content: none;
+                }
+            }
+            div.header {
+                padding: 10px;
+                position: running(header);
+                width: 100%;
+            }
+            div.footer {
+                display: block;
+                padding: 5px;
+                position: running(footer);
+                color: #b5b5b5;
+                font-size: 12px;
+                text-align: center;
+            }
+            div.footer p {
+                margin: 0;
+            }
+            div.content {
+                margin: 0 auto;
+                font-size: 12px;
+            }
+            div.no-header-footer {
+                page: no-header-footer;
+            }
+            .page-break {
+                page-break-before: always;
+            }
+            .page-heading {
+                font-weight: bold;
+            }
+            .positive-margin {
+                margin-top: 40px;
+            }
+            .negative-margin {
+                margin-top: -40px;
+            }
+            .align-center {
+                text-align: center;
+            }
+            .flex-table {
+                display:flex;
+                justify-content: center;
+            }
+            .compact-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            .compact-table td {
+                padding: 4px 0;
+            }
+            .loose-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            .loose-table td {
+                padding: 8px 0;
+            }
+            .label {
+                text-align: left;
+                width: 20%;
+            }
+            .value {
+                text-align: left;
+            }
+            .tableWithBorders table {
+                width: 55%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            .tableWithBorders table, .tableWithBorders th, .tableWithBorders td {
+                border: 0.5px solid black;
+            }
+            .tableWithBorders th, .tableWithBorders td {
+                padding: 2px 4px;
+                text-align: left;
+            }
+            .contact-info {
+                margin-top: 16px;
+                margin-bottom: 16px;
+            }
+            .contact-info p {
+                font-weight: bold;
+                margin: 4px 0;
+            }
+            ul {
+                list-style-type: none;
+            }
+            ul li {
+                margin-top: 6px;
+            }
+            .list-with-gap li {
+                margin: 4px 0;
+            }
+            .list-left-shift{
+                margin-left: 0px;
+            }
+            .agreement-list li {
+                margin-left: -40px;
+                margin-top: 16px;
+                margin-bottom: 4px;
+                list-style-position: inside;
+            }
+            .agreement-list li ol li{
+                margin-left: -40px;
+                margin-top: 8px;
+                margin-bottom: 4px;
+            }
+            .agreement-list li ol li ol li {
+                margin-left: -26px;
+                margin-top: 4px;
+                margin-bottom: 4px;
+            }
+            .agreement-list p {
+                margin: 4px 0;
+            }
+            .code-of-conduct-list li {
+                margin-top: 16px;
+                margin-bottom: 4px;
+            }
+            .alpha-list {
+                list-style-type: lower-alpha;
+            }
+            .roman-list {
+                list-style-type: lower-roman;
+            }
+            .bullet-list {
+                list-style-type: disc;
+            }
+            .signature-line {
+                display: block;
+                border-bottom: 0.5px solid black;
+                width: 150px;
+            }
+            .signature-text {
+                margin-top: 40px;
+            }
+            .signature-text td {
+                text-align: center;
+                height: 70px;
+            }
+            .pageNumber::after {
+                content: counter(page);
+            }
+            .totalPages::after {
+                content: counter(pages);
+            }
+
+
+            .container {
+                width: 100%;
+                border: 1px solid black;
+                padding: 10px;
+            }
+            .checkbox-group {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .checkbox-group label {
+                margin-right: 15px;
+            }
+            .form-group {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .form-group label {
+                width: 200px;
+                font-weight: bold;
+            }
+            .form-group input {
+                flex-grow: 1;
+                height: 20px;
+                border: 1px solid black;
+            }
+            .double {
+                display: flex;
+                gap: 10px;
+            }
+            .double .form-group {
+                flex: 1;
+            }
+ 
+
+        </style>
+    </head>
+
+    <!-- Header Section -->
+    <div class="header">
+        <img src="{!$Resource.CompanyLogo}" alt="Company Logo" style="width: 180px; height: auto;" />
+    </div>
+    
+    <!-- Footer Section -->
+    <div class="footer">
+        <div>    
+            <div style="text-align: center;">
+                <span style="margin:auto">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span>
+                <span style="color: #000000; font-size: 10px;">Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
+            </div>
+            <div>
+            <p>(800) 998-2035 | www.mobilecardiacpet.com</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Body Section -->
+    <div class="content">
+        <!-- Page 1 of 1 -->
+        <p class="align-center negative-margin">
+            <strong>Medical Supervision Agreement Request Form</strong>
+        </p>
+
+        <p>CII Information (do not use abbreviations):</p>
+        <div class="flex-table">
+            <table class="loose-table">
+                <tr>
+                    <td class="label">Effective Date:</td>
+                    <td class="value">
+                        <apex:outputText value="{0,date,MMMM d, yyyy}">
+                        <apex:param value="{!opp.Contract_Effective_Date__c}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Monthly Hours:</td>
+                    <td class="value">
+                        <apex:outputText value="{0,number,#,###}">
+                        <apex:param value="{!opp.Days_per_Month__c * 12}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Annual Hours:</td>
+                    <td class="value">
+                        <apex:outputText value="{0,number,#,###}">
+                        <apex:param value="{!opp.Days_per_Month__c * 12 * 12}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Annual Fee:</td>
+                    <td class="value">$<apex:outputText value="{0,number,#,###}">
+                        <apex:param value="{!annualFee}"/>
+                        </apex:outputText>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <p>Group Information (do not use abbreviations):</p>
+        <div class="flex-table">
+            <table class="loose-table">
+                <tr>
+                    <td class="label">Practice Name:</td>
+                    <td class="value">{!opp.Account_Name__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Physician Name:</td>
+                    <td class="value">{!opp.Supervising_Physician_Name__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Party Signing:</td>
+                    <td class="value">{!opp.Signatory__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Building Owner:</td>
+                    <td class="value">{!opp.Building_Owner__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Street Address:</td>
+                    <td class="value">{!opp.Street_Address__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">City:</td>
+                    <td class="value">{!opp.City__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">State:</td>
+                    <td class="value">{!opp.State__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Zip Code:</td>
+                    <td class="value">{!opp.Zip_Code__c}</td>
+                </tr>
+                <tr>
+                    <td class="label">Phone #:</td>
+                    <td class="value">{!opp.Account_Phone_Number__c}</td>
+                </tr>
+            </table>
+        </div>
+       
+        <apex:outputPanel rendered="{!NOT(sameAccountAddress)}">
+            <p>Imaging location if different than the above:</p>
+            <div class="flex-table">
+                <table class="loose-table">
+                    <tr>
+                        <td class="label">Street Address:</td>
+                        <td class="value">{!opp.Street_Address_1__c}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">City:</td>
+                        <td class="value">{!opp.City_1__c}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">State:</td>
+                        <td class="value">{!opp.State_1__c}</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Zip Code:</td>
+                        <td class="value">{!opp.Zip_Code_1__c}</td>
+                    </tr>
+                </table>
+            </div>
+        </apex:outputPanel>
+        
+        <!-- Page 2 of 2 -->
+        <div class="page-break"></div>
+
+        <p class="positive-margin" style="margin-bottom: 4px;">
+            <strong>Availability:</strong>
+        </p>
+        <p style="margin-top: 0;">
+            <strong>During which days and times are you
+                <i>available</i> to supervise the Cardiac PET scans?
+            </strong>
+        </p>
+        <div class="tableWithBorders">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Days Available</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>
+            <strong>Preferred Days to Scan (pending schedule availability):</strong>
+        </p>
+        <div class="tableWithBorders">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Days Available</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="contact-info">
+            <p>Main contact at office (handling all Cardiac PET scheduling):</p>
+            <p>Phone: __________________________</p>
+            <p>Fax: __________________________</p>
+            <p>Email: __________________________</p>
+            <p>Preferred method of communication: __________________________</p>
+        </div>
+        
+        <div class="contact-info">
+            <p>Back-up Contact:</p>
+            <p>Phone: __________________________</p>
+            <p>Fax: __________________________</p>
+            <p>Email: __________________________</p>
+        </div>
+        
+        <p style="margin-bottom: 4px;">
+            <strong>Preferred Days/times to schedule in-service (based on contact’s availability):</strong>
+        </p>
+        <div class="tableWithBorders">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Days Available</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Tuesday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Wednesday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Thursday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Friday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Saturday</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Page 3 of 3 -->
+        <div class="page-break"></div>
+        
+        <div class="align-center">
+            <strong>Medical Supervision Agreement</strong>
+        </div>
+
+        <p>
+            This Medical Supervision Agreement (“Agreement”), effective as of <apex:outputText value=" {0,date,MMMM d, yyyy}">
+            <apex:param value="{!opp.Contract_Effective_Date__c}"/></apex:outputText> (the “Effective Date”), 
+            by and between Cardiac Imaging, Inc., a Delaware corporation having its principal office located at Two TransAm Plaza, Suite 420, 
+            Oakbrook Terrace, Illinois 60181 (“CII”), and {!opp.Account_Name__c}, {!stateWithArticle}, company having its 
+            principal office located at {!opp.Street_Address__c}, {!opp.City__c}, 
+            {!opp.State__c} {!opp.Zip_Code__c} (hereafter referred to as “Group”). CII and Group may be 
+            referred to herein as a “Party” or collectively as “Parties”.
+        </p>
+        <p>
+            <b>WHEREAS,</b> CII owns and operates a mobile imaging facility (the “Unit”) which is enrolled in Medicare/Medicaid as an
+            Independent Diagnostic Testing Facility (“IDTF”) where Cardiac PET examinations are performed;
+        </p>
+        <p>
+            <b>WHEREAS,</b> CII desires to enter into an agreement with Group whereby Group will provide certain supervisory services
+            for the Unit;
+        </p>
+        <p>
+            <b>WHEREAS,</b> Group employs or contracts with licensed physician(s) who are qualified to perform cardiac positron emission
+            tomography examinations (“Cardiac PET Exams”) performed by CII; and
+        </p>
+        <p>
+            <b>WHEREAS,</b> CII desires to contract with Group for the service of providing supervisory services for CII’s Unit and
+            its patients.
+        </p>
+        <p>
+            <b>NOW, THEREFORE,</b> in consideration of the mutual covenants herein contained and other valuable consideration, the receipt
+            and sufficiency of which are hereby acknowledged, the Parties hereto, intending to be legally bound, agree as follows:
+        </p>
+
+        <ol class="agreement-list">
+            <li>
+                <u>Group Responsibilities</u>
+                <ol class="alpha-list">
+                    <li> Supervisory Services. Group shall provide one or more physicians (each a “Group Physician”) who shall provide
+                        the Unit with (i) direct supervisory services for Cardiac PET Exams furnished by the Unit, and (ii) direct supervision 
+                        and oversight of injections of radiopharmaceuticals and pharmacological stress agents
+                        and assistance in any reactions to these injections, including any ordering of radiopharmaceuticals
+                        as required (a form standing order is attached hereto as Addendum 3 for convenience, subject to Group’s
+                        review and modification as Group deems appropriate). In the case of Cardiac PET Exams requiring direct
+                        supervision, Group may oversee concurrent Cardiac PET Exams.
+                    </li>
+                    <li> Group shall also provide the following general supervisory services:
+                        (i) consult with CII and Unit personnel regarding the overall quality of services provided by the Unit;
+                        (ii) collaborate with CII and Unit personnel to address matters affecting patient care, supplies, and regulations,
+                            as well as to develop quality review and quality improvement activities when appropriate and as may be necessary;
+                        (iii) be responsible for the direct and ongoing oversight of the quality of the testing performed at the Unit;
+                        (iv) be responsible for the proper calibration of equipment used to perform Cardiac PET Exams at the Unit;
+                        (v) be responsible for the qualifications of the Unit’s non-physician personnel who use the equipment to
+                        furnish Cardiac PET Exams;
+                        (vi) assist Unit personnel with patient scheduling; and
+                        (vii) assist with the collection of billing information as needed from patients who are determined to be eligible
+                        for Cardiac PET Exams to be furnished by the Unit.
+                    </li>
+                    <li> Authority Over and Responsibility for the Professional Practice. Neither CII nor any affiliate shall exercise
+                        any control over Group in the provision of professional services performed hereunder. Rather, Group shall
+                        exercise independent medical judgment in the provision of professional services. Group acknowledges that
+                        it will not look to CII for any medical services or judgment whatsoever. Nothing in this Agreement shall
+                        impair or impede a physician's relationship with Group, with a particular patient or limit the physician's
+                        medical judgment exercised for and on behalf of such patient. </li>
+                </ol>
+            </li>
+            <li>
+                <u>Licensing and Credentialing</u>
+                <p> Group must be enrolled in Medicare and each Group Physician must be licensed to practice medicine in the State of
+                    </p>
+                <ol class="alpha-list">
+                    <li> Group shall have all necessary narcotics and controlled substances permit numbers and licenses.</li>
+                    <li> Group represents that neither the Group nor any of the Group Physicians providing services under this Agreement:
+                        (i) has had his or its license to practice medicine in any jurisdiction denied, limited, suspended or revoked;
+                        (ii) has had his or its privileges at any health care facility or provider denied, limited, suspended or revoked;
+                        (iii) has had his or its DEA registration denied, limited, suspended, or revoked;
+                        (iv) has been indicted for the commission of a felony;
+                        (v) has been sanctioned or otherwise disciplined or excluded by Medicare or any other federal program or
+                        any third party payer; or
+                        (vi) has committed acts or omissions, or created an environment, that could create an ongoing risk of harm
+                            to the patients of the Unit or that could bring substantial disrepute to CII. In the event that any
+                            of the foregoing occurs during the term of this Agreement, Group shall immediately notify CII in
+                            writing and shall immediately remove the Group Physician(s) to whom such occurrence applies from
+                            service in the Unit.
+                    </li>
+                    <div class="footer1" style="padding-top:45px;">
+                        <div style="text-align: right">
+                            <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                            <span style="font-size: 10px;">Page 1 of 17</span>  
+                        </div>
+                        <div style="text-align: center">
+                            <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+                        </div>    
+                    </div>
+                    <li> Any Group Physician who has had his or her license to practice medicine in the State of revoked shall not provide
+                        Group professional services hereunder. </li>
+                    <li> Group shall promptly notify CII if any claim, demand, or suit is made against Group or a Group Physician arising
+                        out of or from the provision of Group professional services under the terms of this Agreement, if such claim
+                        names CII.</li>
+                    <li> Group and its Group Physicians and staff shall perform its services in accordance with: applicable federal, state
+                        and local, rules, regulations, generally accepted medical practices, the bylaws, rules regulations, policies
+                        and standards of CII as may be applicable, the U.S. Department of Health and Human Services and any other
+                        applicable accrediting, regulating, or licensing agencies or boards (the “Accrediting and Licensing Agencies”).
+                        Additionally, the Group and each Group Physician shall provide all services hereunder in accordance with
+                        the professional standards described in this Agreement and in a manner such that CII shall:
+                        (i) maintain its licensure and/or certification, as applicable, by the American College of Radiology and
+                        all applicable regulatory agencies;
+                        (ii) continue in conformity with qualifications for reimbursement under Medicaid, Medicare, other federal
+                        and state programs, and other third-party reimbursement programs;
+                        (iii) maintain accreditation by applicable Accrediting and Licensing Agencies to the extent that CII obtains
+                        such accreditation; and
+                        (iv) at all times maintain the Unit’s status as an IDTF under the Medicare Program.
+                    </li>
+                    <li> Group agrees to cause its Group Physicians to remain compliant with CME/CE credits that are used to meet the
+                        accreditation continuing education requirements.</li>
+                    <li> Group agrees to provide when requested by CII all necessary documents, images and reports to complete an accreditation
+                        application or as requested by the Accrediting and Licensing Agencies.</li>
+                </ol>
+            </li>
+        
+            <li>
+                <u>CII’S Responsibilities.</u>
+                <p> CII shall, in its sole discretion and as deemed appropriate by CII, render the technical portion of all procedures
+                    performed in the Unit and shall provide all other non-physician services in the operation of the Unit. CII shall
+                    also:</p>
+                <ol class="alpha-list">
+                    <li> be responsible for all equipment maintenance and repairs and transportation as required for the duration of this
+                        Agreement for the equipment listed hereafter; PET scanner with Invia 4DM cardiac PET software, housed in
+                        a medical trailer, radiopharmaceutical infusion system, and all hot lab equipment and accessories;</li>
+                    <li> be responsible for obtaining and maintaining all required accreditations and certifications for technologists,
+                        nurses and paramedics;</li>
+                    <li> employ nuclear medicine technologists that are registered with the State of {!opp.State__c} and trained to inject 
+                        radioactive isotopes to patients;
+                    </li>
+                    <li> employ nurse(s) or paramedic (s) certified with Advanced Cardiovascular Life Support (“ACLS”) training to inject
+                        stress agent (Regadenoson) to patients and monitor patient vitals (aminophylline may be used to attenuate
+                        severe and/or persistent adverse reactions);</li>
+                    <li> provide Rubidium (Rb-82) radiopharmaceutical injections, Regadenoson pharmacological stress agent including all
+                        IV and EKG supplies, and all sterile supplies;</li>
+                    <li> comply with all State and Federal regulations in accordance with its radiation safety protocols; and</li>
+                    <li> obtain ACR (American College of Radiology) accreditation, at its own cost, and maintain all ACR standards to
+                        provide high quality care. Group agrees to cooperate with CII in order to assist CII in obtaining any required
+                        accreditations and/or certifications.</li>
+                </ol>
+            </li>
+        
+            <li>
+                <u>Compensation</u>
+                <p>In consideration for Group providing Group Physicians to provide supervision services under this Agreement, and the
+                    related services set forth in Section 11, CII agrees to pay Group $<apex:outputText value="{0,number,#,###}">
+                    <apex:param value="{!supervisionRate}"/></apex:outputText> per hour up to a maximum
+                    annual fee of $<apex:outputText value="{0,number,#,###}"><apex:param value="{!annualFee}"/></apex:outputText> 
+                    per year (the “Cap”). In no circumstance will CII pay any fees to Group thatare greater than the Cap.</p>
+                <ol class="alpha-list">
+                    <li>CII and Group shall complete the CII form attached hereto as Schedule A on each date of service certifying the
+                        general and/or direct supervisory services provided by the Customer and the start and end time of those services.
+                        The Schedule A shall be provided to CII at the end of each service date.</li>
+                    <div class="footer1" style="padding-top:45px; display:flex;">
+                        <div style="text-align: right">
+                            <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                            <span style="font-size: 10px;">Page 2 of 17</span>  
+                        </div>
+                        <div style="text-align: center">
+                            <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+                        </div>    
+                    </div>
+                    <li>Upon receiving the completed Schedule A, CII shall pay Group within thirty (30) days. No payment shall be made
+                        without the submission of a completed CII Schedule A.</li>
+                    <li>Group shall provide CII with written documentation as to: the number of hours worked under this Agreement; the
+                        services provided pursuant to the terms of this Agreement; and the requisite physician supervision furnished
+                        for Cardiac PET Exams by the Unit.</li>
+                    <li>In the event Group bills directly for professional interpretation services rendered to the Unit’s patients, then
+                        Group shall be solely responsible for billing and collecting such services.</li>
+                </ol>
+            </li>
+        
+            <li>
+                <u>Radioactive Materials License.</u>
+                <p>During the term of this Agreement, CII shall be responsible for obtaining a RAML (Radioactive Materials License)
+                    and the payment of all initial and renewal fees associated therewith, all necessary physicist services, all record
+                    keeping and quality assurance needed to maintain a RAML. CII shall not be held responsible for any such remedial
+                    actions, fees or penalties if such state violations are a direct result of the actions by Group’s employees or
+                    contractors.</p>
+                <ol class="alpha-list">
+                    <li>Group agrees to become an Authorized User on CII’s RAML.</li>
+                    <li>Group agrees to comply with all terms and conditions on CII’s RAML, including CII’s policies and procedures related
+                        to use of radioactive materials in the performance of the exams.</li>
+                </ol>
+            </li>
+        
+            <li>
+                <u>Term and Termination.</u>
+                <ol class="alpha-list">
+                    <li> The term of this Agreement shall be for three (3) years beginning on the Effective Date and, thereafter, shall
+                        automatically renew for successive 12-month terms, unless earlier terminated as provided in this Agreement
+                        (the “Term”). Either Party may elect not to renew this Agreement at the end of the term by giving written
+                        notice of non-renewal to the other Party at least thirty (30) days prior to the expiration of the then current
+                        term. </li>
+                    <li> This Agreement may be terminated by CII, with or without cause, by providing Group at least thirty (30) days’
+                        prior written notice at the address of Group stated herein that CII desires to terminate this Agreement;
+                        provided, however, that CII shall not terminate the Agreement without cause during the one-year period following
+                        the Effective Date. Should this Agreement terminate during the one-year period following the Effective Date
+                        for any reason, the Parties agree not to enter into another agreement for the same items or services until
+                        that one¬-year period has lapsed. </li>
+                    <li> Upon the expiration or termination of this Agreement, then Group and Group Physicians’ affiliation with CII as
+                        a supervising physician shall, without further action by CII or Group, be deemed to terminate immediately.
+                        Upon the expiration or earlier termination of this Agreement, the Parties shall thereafter be automatically
+                        relieved and released from all further liabilities and obligations hereunder, except for
+                        (i) liabilities and obligations accruing prior to the date of expiration or earlier termination and
+                        (ii) liabilities and obligations contained herein which are expressly made to extend beyond the term, all
+                        of which shall survive the expiration or earlier termination of this Agreement.
+                    </li>
+                </ol>
+            </li>
+        
+            <li>
+                <u>Insurance and Indemnity.</u>
+                <p>
+                    Both Parties shall maintain professional liability insurance in amounts consistent with that maintained by similar entities
+                    and clinics and shall provide evidence of such insurance coverage to the other Party when requested. Each Party
+                    (the “Indemnifying Party”) shall indemnify, defend and hold harmless the other Party, including, without limitation,
+                    the other Party’s, officers, directors, employees and agents from and against any and all actions or causes of
+                    action, claims, demands, liabilities, loss, damage or expense, including costs and reasonable attorneys' fees,
+                    resulting from or arising in connection with (i) any act, omission or negligence by the Indemnifying Party, including,
+                    without limitation, the Indemnifying Party’s officers, directors, employees and agents, or (ii) any breach by
+                    the Indemnifying Party of the terms of this Agreement.
+                </p>
+            </li>
+        
+            <li>
+                <u>Force Majeure.</u>
+                <p>
+                    CII shall not be liable to Group for any failure by CII to perform under this Agreement if such failure is the result, directly
+                    or indirectly, of a condition beyond CII's reasonable control, including, but not limited to, Acts of God, strike,
+                    acts of government or compliance with any governmental rules or regulations, public riot, adverse weather conditions,
+                    or act of a public enemy. The Parties that any time limit provided for herein shall be extended for the period
+                    of time caused by such contingency.
+                </p>
+            </li>
+        
+            <li>
+                <u>Independent Contractor Status.</u>
+                <div class="footer1" style="padding-top:45px; display:flex;">
+                    <div style="text-align: right">
+                        <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                        <span style="font-size: 10px;">Page 3 of 17</span>  
+                    </div>
+                    <div style="text-align: center">
+                        <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+                    </div>    
+                </div>
+                <p>
+                    Group and the Group Physicians are performing all services required of them by this Agreement as independent contractors,
+                    and as such they shall remain professionally and economically independent of each other. The Parties are not,
+                    and shall not be deemed to be, joint venturers, partners, agents or employees of each other.
+                </p>
+            </li>
+        
+            <li>
+                <u>Medical Records.</u>
+                <p>
+                    Group shall maintain and retain medical records to satisfy requirements of applicable federal and state laws and regulations,
+                    including in connection with the performance of services hereunder. To the maximum extent permitted under applicable
+                    laws, medical records created hereunder shall be maintained and retained in one or more electronic records systems
+                    that are accurate and accessible for later reference. Group shall maintain the confidentiality of all records
+                    generated as a result of providing medical services to patients. The utilization and disclosure of such records
+                    shall be consistent with all applicable laws, rules, regulations, ethical codes, and privileges. Group shall
+                    maintain all guidelines associated with Health Insurance Portability and Accountability Act of 1996 and its implementing
+                    regulations, as amended.
+                </p>
+            </li>
+        
+            <li>
+                <u>Utilities, Access and Parking; Related Administrative Services</u>
+                <p>
+                    Group shall be responsible for providing utilities, a fax machine, restrooms, common areas, wireless internet access at the
+                    Unit location, and access to Group’s electronic medical records system as applicable, as well as related administrative
+                    services with Group’s office manager, scheduler, or similar personnel for purposes of coordination of the services
+                    with CII. Group shall also be responsible for providing sufficient parking so that the Unit may provide the services
+                    described herein, and shall enter into that certain Addendum 1, attached hereto and incorporated by reference
+                    herein.
+                </p>
+            </li>
+        
+            <li>
+                <u>Restrictive Covenant.</u>
+                <p>
+                    Group recognizes that CII has entered into this Agreement in reliance upon the covenants and assurances made by Group herein.
+                    Group agrees that, during the Term or any renewal term of this Agreement and for a period of twelve (12) months
+                    thereafter, Group and its affiliates shall not, directly or indirectly, on behalf of Group or any other person
+                    or entity: (i) operate, own, participate in and/or manage any business providing services competitive with those
+                    provided by CII; (ii) hire, solicit or encourage to leave CII's employment or engagement, any employee, consultant,
+                    or contractor of CII; (iii) employ or engage any such employee, consultant or contractor of CII who has left
+                    CII's employment or engagement within one (1) year of such employment or engagement; or (iv) solicit or encourage
+                    any business associates of CII to do business with any person or entity for the provision of services competitive
+                    with CII. Group and its affiliates further covenant during the Term and any renewal term of this Agreement not
+                    to provide supervisory services at any other mobile IDTF.
+                </p>
+            </li>
+        
+            <li>
+                <u>Confidentiality.</u>
+                <p>
+                    During the term of this Agreement and for a period of two (2) years following the termination, expiration, or nonrenewal
+                    of this Agreement, each Party agrees to keep confidential the other Party's confidential information and trade
+                    secrets except when disclosure may be required by law. For purposes of this Agreement, confidential information
+                    shall not include: (i) information which is or becomes known to the general public; or (ii) information which
+                    a Party obtains from another source that is not required to maintain such information in confidence.
+                </p>
+            </li>
+        
+            <li>
+                <u>Regulatory Compliance.</u>
+                <p>
+                    The Parties represent and warrant that they and their employees and/or agents (as applicable) are familiar with the requirements
+                    imposed by federal, state and local laws applicable to this Agreement and that, in the performance of this Agreement,
+                    they will fully comply with these and all applicable statutes, rules and regulations with respect thereto, including,
+                    without limitation, the Physician Self-Referral Law, 42 U.S.C. §§ 1395, et seq.; federal Anti-Kickback Statute,
+                    42 U.S.C. §1320a-7b(b); and all applicable laws and regulations in the jurisdiction where the services are provided
+                    hereunder. Accordingly, any remuneration pursuant to this Agreement is in no way intended to be in exchange for
+                    business generated between either Party or either Party and any Group Physician. It is not a requirement of this
+                    Agreement that Group or any Group Physician generate any business to CII. The Parties agree and acknowledge that
+                    the compensation terms contained in this Agreement are set at fair market value, are commercially reasonable,
+                    have been negotiated in an arms-length transaction and have not been determined in a manner that takes into account
+                    the volume or value of any referrals or business otherwise generated between the Parties for which payment may
+                    be made in whole or in part under federal 
+                    <div class="footer1" style="padding-top:45px; display:flex;">
+                    <div style="text-align: right">
+                        <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                        <span style="font-size: 10px;">Page 4 of 17</span>  
+                    </div>
+                    <div style="text-align: center">
+                        <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+                    </div>    
+                    </div>
+                    healthcare programs. Group shall notify CII immediately upon becoming
+                    aware of any breach of obligations under this section. Group and Group Physicians and all other applicable employees
+                    and/or agents shall participate in any compliance, legal, or anti-corruption training reasonably required by
+                    CII. Without limiting the foregoing, the Parties agree to comply with applicable federal and state privacy laws
+                    in course of performing services under this Agreement, including, without limitation, the Health Insurance Portability
+                    and Accountability Act and regulations promulgated thereunder, and shall enter into that certain business associate
+                    agreement attached hereto as Addendum 3 and incorporated by reference herein.
+                </p>
+            </li>
+        
+            <li>
+                <u>Jurisdiction.</u>
+                <p>
+                    This Agreement shall be governed by and construed in accordance with the laws of the State of {!opp.State__c}, without giving effect
+                    to any choice of law rules. Any action or proceeding arising from or in connection with this Agreement shall
+                    be brought solely in the federal or state courts located in {!opp.City__c}, {!opp.State__c}, and each of the Parties hereto hereby
+                    consents to the jurisdiction of those courts for any such action or proceeding.
+                </p>
+            </li>
+        
+            <li>
+                <u>Successors and Assigns.</u>
+                <p>
+                    CII reserves the right to assign this Agreement, and Group hereby acknowledges notice of assignment and consents and agrees
+                    to the following terms: the assignee shall be entitled to the benefits and performance of all the covenants to
+                    be performed by Group under the Agreement as though the assignee were named herein as CII, and Group agrees that
+                    this Agreement shall not be terminated, amended or modified without the prior written consent of the assignee.
+                    Group may not assign any of its rights or obligations under this Agreement to any third party without the express,
+                    written consent of CII.
+                </p>
+            </li>
+        
+            <li>
+                <u>Entire Agreement.</u>
+                <p>
+                    Except with respect to any pre-existing confidentiality agreements between the Parties, this Agreement, and its exhibits,
+                    and schedules, which are made a part hereof, is the entire agreement between the Parties with respect to the
+                    subject matter hereof and supersedes any and all other agreements, either oral or in writing, between them. There
+                    are no oral promises, conditions, representations, understandings, interpretations or terms of any kind as conditions
+                    or inducements to the execution hereof or in effect among the Parties. No custom or trade usage, nor course of
+                    conduct among the Parties, shall be relied upon to vary the terms hereof. This Agreement may not be amended,
+                    and no provision hereof shall be waived, except by a writing signed by all the Parties to this Agreement, which
+                    states that it is intended to amend or waive a provision of this Agreement. Any waiver of any rights or failure
+                    to act in a specific instance shall relate only to that instance and shall not be construed as an agreement to
+                    waive any rights or failure to act in any other instance, whether or not similar.
+                </p>
+            </li>
+        
+            <li>
+                <u>Severability.</u>
+                <p>
+                    Should any provision of this Agreement for any reason be declared unenforceable or invalid by a court or other body of competent
+                    jurisdiction, this Agreement shall be considered divisible as to any inoperative provision and the remaining
+                    portions of this Agreement shall remain in full force and effect as if this Agreement had been executed with
+                    the invalid portion thereof eliminated.
+                </p>
+            </li>
+        
+            <li>
+                <u>Change of Circumstances.</u>
+                <p>
+                    In the event there shall be a change in any federal, state or local legislative or regulatory authority adopts any law, rule,
+                    regulation, policy, procedure or interpretation thereof which shall make this Agreement unlawful, the Parties
+                    will, within thirty (30) days of such legislation, meet and use their best efforts to enter into a new arrangement
+                    that complies with all legal requirements and that maintains the economic neutrality of this arrangement.
+                </p>
+            </li>
+        
+            <li>
+                <u>Notices</u>
+                <p>
+                    Any notice required or permitted under the terms of this Agreement or required by law must be in writing and sent by overnight
+                    air courier to CII's corporate headquarters, and to the address on file for the Group.
+                </p>
+            </li>
+        
+            <li>
+                <u>Counterparts; Electronic Signature.</u>
+                <p>
+                    The Agreement may be executed in one or more counterparts, each of which shall be an original, but all of which taken 
+                    <div class="footer1" style="padding-top:45px; display:flex;">
+                    <div style="text-align: right">
+                        <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                        <span style="font-size: 10px;">Page 5 of 17</span>  
+                    </div>
+                    <div style="text-align: center">
+                        <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+                    </div>    
+                    </div>
+                    together shall constitute one and the same agreement. Facsimile or electronic transmission of any signed original counterpart
+                    shall be deemed the same as the delivery of an original. Each Party agrees that the electronic signatures of
+                    the Parties included in the Agreement are intended to authenticate this writing and to have the same force and
+                    effect as manual signatures.
+                </p>
+            </li>
+        
+        </ol>
+
+        <div class="align-center">
+            <span>[Signature Page Follows]</span>
+        </div>
+
+        <div class="footer1" style="padding-top:760px; display:flex;">
+            <div style="text-align: right">
+                <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                <span style="font-size: 10px;">Page 6 of 17</span>  
+            </div>
+            <div style="text-align: center">
+                <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+            </div>    
+        </div>
+
+        <!-- Page 8 of 8 -->
+        <div class="page-break"></div>
+
+        <p>By execution hereof, the signer hereby certifies that he/she has read and understands this Agreement, is duly authorized
+            to execute this Agreement and each of the Parties agrees to be bound by its terms.</p>
+
+        <div class="flex-table">
+            <table class="loose-table">
+                <tr>
+                    <td>Group: {!opp.Account_Name__c}</td>
+                    <td class="value">CII: Cardiac Imaging, Inc.</td>
+                </tr>
+                <tr>
+                    <td>By: _____________________________</td>
+                    <td class="value">By: _____________________________</td>
+                </tr>
+                <tr>
+                    <td>Name: {!opp.Signatory__c}</td>
+                    <td class="value">Name: Sam Kancherlapalli, CEO </td>
+                </tr>
+                <tr>
+                    <td>Date: ______________________________</td>
+                    <td class="value">Date: ______________________________</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer1" style="padding-top:650px; display:flex;">
+            <div style="text-align: right">
+                <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                <span style="font-size: 10px;">Page 7 of 17</span>  
+            </div>
+            <div style="text-align: center">
+                <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+            </div>    
+        </div>
+
+        <!-- Page 9 of 9 -->
+        <div class="page-break"></div>
+
+        <div class="align-center">
+            <p>
+                <strong>ADDENDUM 1</strong>
+            </p>
+            <p>
+                <strong>Mobile Cardiac PET/CT Landlord Acknowledgement</strong>
+            </p>
+        </div>
+
+        <p><strong>Document Purpose:</strong> In partnership with {!opp.Account_Name__c}, Cardiac Imaging, Inc. (CII) will place a mobile unit at 
+            {!opp.Street_Address_1__c}, {!opp.City_1__c}, {!opp.State_1__c}, {!opp.Zip_Code_1__c} to perform cardiac PET/CT exams. These exams use 
+            radioactive material, which remains fully contained within our mobile trailer at all times. This document is to make you aware of this 
+            setup and confirm that CII assumes full responsibility for all aspects related to the radioactive material. 
+        </p>
+
+        <p><strong>Exam Purpose:</strong> Cardiac PET/CT exams are widely recognized as the gold standard for diagnosing coronary artery disease, 
+            playing a vital role in delivering timely and effective care. By providing the services on-site, patients can be under the direct 
+            supervision of their provider and have access to industry-leading technology – leading to faster results, improved care, and better 
+            health outcomes.
+        </p>
+
+        <p>CII Responsibilities: </p>
+
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; CII takes full responsibility for handling, removing, and disposing of all radiopharmaceuticals. </p>
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; CII holds and maintains all required licenses and follows all relevant regulations. </p>
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; All radioactive material remains inside the mobile trailer; none will be brought into your facility. </p>
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; CII will provide its Certificate of Insurance (COI) upon request. </p>
+
+        <p>Landlord Responsibilities: </p>
+
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; You acknowledge that CII’s mobile trailer will be on your premises. </p>
+        <p style="margin-top:-10px;">&nbsp; &nbsp; • &nbsp; You agree to grant CII personnel access to the trailer when it is on your premises. </p>
+        
+        <div class="flex-table signature-text">
+            <table class="loose-table">
+                <tr>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Landlord</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Print Name</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Title</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Date</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Radiation Safety Officer</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Print Name</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Title</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Date</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>CII Management</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Print Name</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Title</td>
+                    <td style="text-align: left;">
+                        <span class="signature-line"></span>Date</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer1" style="padding-top:235px; display:flex;">
+            <div style="text-align: right">
+                <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                <span style="font-size: 10px;">Page 8 of 17</span>  
+            </div>
+            <div style="text-align: center">
+                <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+            </div>    
+        </div>
+
+        <!-- Page 10 of 10 -->
+        <div class="page-break"></div>
+
+        <div class="align-center">
+            <p>
+                <b>ADDENDUM 2</b>
+            </p>
+            <p>
+                <b>Radiopharmaceutical Standing Order</b>
+            </p>
+        </div>
+
+        <p>The following standing order is to Cardiac Imaging, Inc. staff and personnel. For each patient requiring a nuclear cardiology
+            procedure, I understand that I must place a written order for the procedure in the patient’s medical record. It is to
+            be left to the discretion of the nuclear technologist to follow the Society of Nuclear Medicine protocols and make recommendations
+            to the Authorized Used regarding scan times or multi-day protocols.
+        </p>
+        <p>I request that Cardiac Imaging, Inc. provide the following radiopharmaceutical(s) as standard protocol for my patients:
+            <b>
+                <u>Single Isotope</u>
+            </b>
+        </p>
+        <p>
+            <b>
+                <u>Protocol: Ruby-Fill Model Rb-82 generator</u>
+            </b>
+        </p>
+        <p>As a part of the PET perfusion procedure, a stress test is required. Dependent upon the patient condition, the patient will
+            be administered a pharmacological stress agent. I will be ordering the following medication depending upon the patient
+            condition:
+            <b>
+                <u>Pharmacological Stress Agent: Regadenoson</u>
+            </b>
+        </p>
+        <p>To facilitate radiopharmaceutical ordering, I hereby authorize an appointed member of my staff to complete, sign and submit
+            a Cardiac Imaging Patient Order form, on my behalf, based on my verbal or written patient orders. The designated staff
+            member(s) has my approval to transmit my order for radiopharmaceuticals directly to Cardiac Imaging, based on my instructions.
+            The order on the Patient Order form shall be deemed to be my prescription for both the radiopharmaceutical and the stress
+            pharmaceutical.</p>
+        <p>If a patient becomes compromised and intervention is required to maintain normal cardiac function, I hereby order Cardiac
+            Imaging, Inc. clinicians to follow ACLS protocols unless I directly instruct them to deviate from that protocol.</p>
+
+        <br/>
+        <br/>
+        <div class="flex-table">
+            <table class="compact-table">
+                <tr>
+                    <td>Facility Name: {!opp.Account_Name__c}</td>
+                </tr>
+                <tr>
+                    <td>Address: {!opp.Street_Address__c}</td>
+                </tr>
+                <tr>
+                    <td>City, State, and Zip Code: {!opp.City__c}, {!opp.State__c} and {!opp.Zip_Code__c}</td>
+                </tr>
+                <tr>
+                    <td>Telephone: {!opp.Account_Phone_Number__c}</td>
+                </tr>
+            </table>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+        <div class="flex-table">
+            <table class="loose-table">
+                <tr>
+                    <td style="width:400px; height:50px;">
+                        <span class="signature-line" style="width: 300px;"></span>Physician Signature
+                    </td>
+                    <td style="height:50px;">
+                        <span class="signature-line" style="width: 100px;"></span>Date
+                    </td>
+                </tr>
+                <tr>
+                    <td style="height:50px;">Physician Name : {!opp.Supervising_Physician_Name__c}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer1" style="padding-top:170px; display:flex;">
+            <div style="text-align: right">
+                <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                <span style="font-size: 10px;">Page 9 of 17</span>  
+            </div>
+            <div style="text-align: center">
+                <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+            </div>    
+        </div>
+
+        <!-- Page 11 of 11 -->
+        <div class="page-break"></div>
+
+        <div class="align-center">
+            <p>
+                <b>ADDENDUM 3</b>
+            </p>
+            <p>
+                <b>HIPAA Business Associate Agreement</b>
+            </p>
+        </div>
+
+        <p>This Addendum, dated as of <apex:outputText value=" {0,date,MMMM d, yyyy}"><apex:param value="{!opp.Contract_Effective_Date__c}"/>
+            </apex:outputText> (“Addendum”), supplements and is made a part of the Medical Supervision Agreement
+            (as defined below) by and between {!opp.Account_Name__c} (the “Business Associate”) and Cardiac Imaging, Inc. (the “Covered Entity”).
+        </p>
+        <p>
+            &nbsp; &nbsp; &nbsp; WHEREAS, Covered Entity and Business Associate are parties to the Medical Supervision Agreement pursuant
+            to which Business Associate provides certain services to Covered Entity. In connection with Business Associate’s services,
+            Business Associate creates or receives Protected Health Information from or on behalf of Covered Entity, which information
+            is subject to protection under the Federal Health Insurance Portability and Accountability Act of 1996, Pub. L. No. 104-191
+            and related regulations promulgated by the Secretary (collectively, “HIPAA”).
+        </p>
+        <p>
+            &nbsp; &nbsp; &nbsp; WHEREAS, in light of the foregoing and the requirements of HIPAA, Business Associate and Covered Entity
+            agree to be bound by the following terms and conditions:
+        </p>
+
+        <p>
+            <u>
+                <b>Definitions</b>
+            </u>
+        </p>
+        <ul>
+            <li>
+                <u>General.</u> Terms used, but not otherwise defined, in this Addendum shall have the same meaning as those terms in
+                the Privacy Rule, Breach Notification Rule and the Security Rule.</li>
+            <li>
+                <u>Breach Notification Rule.</u> “Breach Notification Rule” shall mean the breach notification standards at 45 CFR parts
+                160 and 164.</li>
+            <li>
+                <u>Electronic Protected Health Information.</u> “Electronic Protected Health Information” shall have the same meaning
+                as the term “electronic protected health information” in 45 CFR 160.103, limited to the information that Business
+                Associate creates, receives, maintains, or transmits from or on behalf of Covered Entity.</li>
+            <li>
+                <u>Individual.</u> “Individual” shall have the same meaning as the term “individual” in 45 CFR 160.103 and shall include
+                a person who qualifies as a personal representative in accordance with 45 CFR 164.502(g).</li>
+            <li>
+                <u>Privacy Rule.</u> “Privacy Rule” shall mean the Standards for Privacy of Individually Identifiable Health Information
+                at 45 CFR parts 160 and 164.</li>
+            <li>
+                <u>Protected Health Information.</u> “Protected Health Information” shall have the same meaning as the term “protected
+                health information” in 45 CFR 160.103, limited to the information created or received by Business Associate from
+                or on behalf of Covered Entity.</li>
+            <li>
+                <u>Required By Law.</u> “Required by Law” shall have the same meaning as the term “required by law” in 45 CFR 164.103.</li>
+            <li>
+                <u>Secretary.</u> “Secretary” shall mean the Secretary of the Department of Health and Human Services or his designee.</li>
+            <li>
+                <u>Security Rule.</u> “Security Rule” shall mean the Security Standards at 45 CFR parts 160 and 164.</li>
+            <li>
+                <u>Supervision Agreement.</u> “Supervision Agreement” shall mean any present or future agreements, either written or
+                oral, between Covered Entity and Business Associate under which Business Associate provides services to Covered Entity
+                which involve the use or disclosure of Protected Health Information.</li>
+        </ul>
+
+        <p>
+            <u>
+                <b>Obligations and Activities of Business Associate.</b>
+            </u>
+        </p>
+        <ul>
+            <li>
+                <u>Use and Disclosure.</u> Business Associate agrees to not use or disclose Protected Health Information other than
+                as permitted or required by the Supervision Agreement or as Required By Law.</li>
+            <li>
+                <u>Appropriate Safeguards.</u> Business Associate agrees to use appropriate safeguards to prevent use or disclosure
+                of the Protected Health Information other than as provided for by the Supervision Agreement. Without limiting the
+                generality of the foregoing sentence, Business Associate will:
+                <ul>
+                    <li>Implement administrative, physical, and technical safeguards that reasonably and appropriately protect the confidentiality,
+                        integrity, and availability of Electronic Protected Health Information as required by the Security Rule;</li>
+                    <li>Ensure that any agent, including a subcontractor, to whom Business Associate provides Electronic Protected Health
+                    <div class="footer1" style="padding-top:45px; display:flex;">
+                        <div style="text-align: right">
+                            <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                            <span style="font-size: 10px;">Page 10 of 17</span>  
+                        </div>
+                        <div style="text-align: center">
+                            <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+                        </div>    
+                    </div>
+                        Information agrees to implement reasonable and appropriate safeguards to protect Electronic Protected Health
+                        Information; and</li>
+                    <li>Report to Covered Entity any security incident (as defined by the Security Rule) of which Business Associate
+                        becomes aware. Notwithstanding the foregoing, Covered Entity acknowledges and agrees that this section constitutes
+                        notice to Covered Entity of the ongoing existence and occurrence of attempted but Unsuccessful Security Incidents.
+                        “Unsuccessful Security Incidents” shall include, but not be limited to, pings and other broadcast attack
+                        of Business Associate’s firewall, port scans, unsuccessful log-on attempts, denials of service, and any combination
+                        of the above, so long as no such incident results in unauthorized access, use or disclosure of Protected
+                        Health Information.</li>
+                    <li>Report to Covered Entity any breach (as defined by the Breach Notification Rule) of which Business Associate
+                        becomes aware.</li>
+                </ul>
+            </li>
+            <li>
+                <u>Mitigation.</u> Business Associate agrees to mitigate, to the extent practicable, any harmful effect that is known
+                to Business Associate of a use or disclosure of Protected Health Information by Business Associate in violation of
+                the requirements of this Addendum.</li>
+            <li>
+                <u>Reporting.</u> Business Associate agrees to report to Covered Entity any use or disclosure of the Protected Health
+                Information not provided for by the Supervision Agreement of which it becomes aware.</li>
+            <li>
+                <u>Agents.</u> Business Associate agrees to ensure that any agent, including a subcontractor, to whom it provides Protected
+                Health Information received from, or created or received by Business Associate on behalf of Covered Entity agrees
+                to the same restrictions and conditions that apply through this Addendum to Business Associate with respect to such
+                information.</li>
+            <li>
+                <u>Access to Designated Record Sets.</u> To the extent that Business Associate possesses or maintains Protected Health
+                Information in a Designated Record Set, Business Associate agrees to provide access, at the request of Covered Entity,
+                and in the time and manner designated by the Covered Entity, to Protected Health Information in a Designated Record
+                Set, to Covered Entity or, as directed by Covered Entity, to an Individual in order to meet the requirements under
+                45 CFR 164.524.</li>
+            <li>
+                <u>Amendments to Designated Record Sets.</u> To the extent that Business Associate possesses or maintains Protected
+                Health Information in a Designated Record Set, Business Associate agrees to make any amendment(s) to Protected Health
+                Information in a Designated Record Set that the Covered Entity directs or agrees to pursuant to 45 CFR 164.526 at
+                the request of Covered Entity or an Individual, and in the time and manner designated by the Covered Entity.</li>
+            <li>
+                <u>Access to Books and Records.</u> Business Associate agrees to make internal practices, books, and records, including
+                policies and procedures and Protected Health Information, relating to the use and disclosure of Protected Health
+                Information received from, or created or received by Business Associate on behalf of, Covered Entity available to
+                the Covered Entity, or to the Secretary, in a time and manner designated by the Covered Entity or designated by the
+                Secretary, for purposes of the Secretary determining Covered Entity’s compliance with the Privacy Rule.</li>
+            <li>
+                <u>Accountings.</u> Business Associate agrees to document such disclosures of Protected Health Information and information
+                related to such disclosures as would be required for Covered Entity to respond to a request by an Individual for
+                an accounting of disclosures of Protected Health Information in accordance with 45 CFR 164.528.</li>
+            <li>
+                <u>Requests for Accountings.</u> Business Associate agrees to provide to Covered Entity or an Individual, in the time
+                and manner designated by the Covered Entity, information collected in accordance with Section 2(i) of this Addendum,
+                to permit Covered Entity to respond to a request by an Individual for an accounting of disclosures of Protected Health
+                Information in accordance with 45 CFR 164.528.</li>
+        </ul>
+        <p>
+            <strong>
+                <u>Permitted Uses and Disclosures by Business Associate.</u>
+            </strong>
+        </p>
+        <ul>
+            <li>
+                <u>Supervision Agreement.</u> Except as otherwise limited in this Addendum, Business Associate may use or disclose Protected
+                Health Information to perform functions, activities, or services for, or on behalf of, Covered Entity as specified
+                in the Supervision Agreement, provided that such use or disclosure would not violate the Privacy Rule if done by
+                Covered Entity or the minimum necessary policies and procedures of the Covered Entity.</li>
+            <li>
+                <u>Use for Administration of Business Associate.</u> Except as otherwise limited in this Addendum, Business Associate
+                may use Protected Health Information for the proper management and administration of the Business Associate or to
+                carry out the legal responsibilities of the Business Associate.</li>
+            <li>
+                <u>Disclosure for Administration of Business Associate.</u> Except as otherwise limited in this Addendum, Business Associate
+                may disclose Protected Health Information for the proper management and administration of the Business Associate,
+                provided that disclosures are Required by Law, or Business Associate obtains reasonable assurances from the person
+                to whom the
+                <div class="footer1" style="padding-top:45px; display:flex;">
+                    <div style="text-align: right">
+                        <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                        <span style="font-size: 10px;">Page 11 of 17</span>  
+                    </div>
+                    <div style="text-align: center">
+                        <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+                    </div>    
+                </div>
+                information is disclosed that it will remain confidential and used or further disclosed only as Required
+                by Law or for the purpose for which it was disclosed to the person, and the person notifies the Business Associate
+                of any instances of which it is aware in which the confidentiality of the information has been breached.</li>
+        </ul>
+        <p>
+            <strong>
+                <u>Permissible Requests by Covered Entity.</u>
+            </strong> Except as set forth in Section 3 of this Addendum, Covered Entity shall not request Business Associate to use or disclose
+            Protected Health Information in any manner that would not be permissible under the Privacy Rule if done by Covered Entity.</p>
+        <p>
+            <strong>
+                <u>Term and Termination.</u>
+            </strong>
+        </p>
+        <ul>
+            <li>
+                <u>Term.</u> This Addendum shall be effective as of the date of this Addendum, and shall terminate when all of the Protected
+                Health Information provided by Covered Entity to Business Associate, or created or received by Business Associate
+                on behalf of Covered Entity, is destroyed or returned to Covered Entity, or, if it is infeasible to return or destroy
+                Protected Health Information, protections are extended to such information, in accordance with the termination provisions
+                in this Section.</li>
+            <li>
+                <u>Termination for Cause.</u> Upon Covered Entity’s knowledge of a material breach of this Addendum by Business Associate,
+                Covered Entity shall either:
+                <ul>
+                    <li>Provide an opportunity for Business Associate to cure the breach or end the violation. If Business Associate
+                        does not cure the breach or end the violation within the time specified by Covered Entity, Covered Entity
+                        shall terminate: (A) this Addendum;</li>
+                    <li>(B) all of the provisions of the Supervision Agreement that involve the use or disclosure of Protected Health
+                        Information; and (C) such other provisions, if any, of the Supervision Agreement as Covered Entity designates
+                        in its sole discretion;</li>
+                    <li>Immediately terminate: (A) this Addendum; (B) all of the provisions of the Supervision Agreement that involve
+                        the use or disclosure of Protected Health Information; and (C) such other provisions, if any, of the Supervision
+                        Agreement as Covered Entity designates in its sole discretion if Business Associate has breached a material
+                        term of this Addendum and cure is not possible; orIf neither termination nor cure are feasible, Covered Entity
+                        shall report the violation to the Secretary.</li>
+                </ul>
+            </li>
+            <li>
+                <u>Effect of Termination.</u>
+                <ul>
+                    <li>Except as provided in paragraph (ii) of this Section 5(c), upon termination of this Addendum, for any reason,
+                        Business Associate shall return or destroy all Protected Health Information received from Covered Entity,
+                        or created or received by Business Associate on behalf of Covered Entity. This provision shall apply to Protected
+                        Health Information that is in the possession of subcontractors or agents of Business Associate. Business
+                        Associate shall retain no copies of the Protected Health Information.</li>
+                    <li>In the event that Business Associate determines that returning or destroying the Protected Health Information
+                        is infeasible, Business Associate shall extend the protections of this Addendum to such Protected Health
+                        Information and limit further uses and disclosures of such Protected Health Information to those purposes
+                        that make the return or destruction infeasible, for so long as Business Associate maintains such Protected
+                        Health Information.</li>
+                </ul>
+            </li>
+        </ul>
+        <p>
+            <strong>
+                <u>Electronic Transaction Standards.</u>
+            </strong> Business Associate shall, to the extent applicable, comply with all HIPAA standards and requirements (including, without
+            limitation, those specified in 45 CFR Part 162) with respect to the transmission of health information in electronic
+            form in connection with any transaction for which the Secretary has adopted a standard under HIPAA (“Covered Transactions”).
+            In addition, Business Associate will make any of its software which it licenses to Covered Entity to perform all or a
+            part of any Covered Transaction compliant with any guides, standards or specifications adopted by Covered Entity’s payors
+            regarding Covered Transactions. Business Associate shall comply with all HIPAA and payor standards and requirements by
+            the applicable compliance dates. Business Associate represents and warrants that it is aware of all current HIPAA and
+            payor standards and requirements regarding Covered Transactions, and Business Associate shall comply with any modifications
+            to HIPAA and payor standards and requirements which become effective from time to time. Covered Entity agrees to notify
+            Business Associate of its current payors, upon request. Business Associate agrees that its compliance shall be at its
+            sole cost and expense, which expense shall not be passed on to Covered Entity in any form, including, but not limited
+            to, increased fees. Business Associate shall also require all of its agents and subcontractors (if any) who assist Business
+            Associate in providing its services and/or products to comply with all applicable requirements of HIPAA and Covered Entity’s
+            payors.</p>
+        <p>
+            <strong>
+                <u>Miscellaneous.</u>
+            </strong>
+        </p>
+        <ul>
+            <div class="footer1" style="padding-top:45px; display:flex;">
+                <div style="text-align: right">
+                    <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                    <span style="font-size: 10px;">Page 12 of 17</span>  
+                </div>
+                <div style="text-align: center">
+                    <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+                </div>    
+            </div>
+            <li>
+                <u>Regulatory References.</u> A reference in this Addendum to a section in HIPAA means the section as in effect or as
+                amended.</li>
+            <li>
+                <u>Amendment.</u> The Parties agree to take such action as is necessary to amend the Supervision Agreement from time
+                to time as is necessary for Covered Entity to comply with the requirements of the HIPAA.</li>
+            <li>
+                <u>Survival.</u> The respective rights and obligations of Business Associate under Section 5(c) of this Addendum shall
+                survive the termination of the Supervision Agreement.</li>
+            <li>
+                <u>Interpretation.</u> Any ambiguity in this Addendum shall be resolved to permit Covered Entity to comply with HIPAA.</li>
+            <li>
+                <u>Miscellaneous.</u> The terms of this Addendum are hereby incorporated into the Supervision Agreement. Except as otherwise
+                set forth in Section 7(d) of this Addendum, in the event of a conflict between the terms of this Addendum and the
+                terms of the Supervision Agreement, the terms of this Addendum shall prevail. The terms of the Supervision Agreement
+                which are not modified by this Addendum shall remain in full force and effect in accordance with the terms thereof.
+                The Supervision Agreement together with this Addendum constitutes the entire agreement between the parties with respect
+                to the subject matter contained herein. This Addendum may be executed in counterparts, each of which when taken together
+                shall constitute one original.</li>
+        </ul>
+        <div class="align-center">
+            <span>[Signature Page Follows]</span>
+        </div>
+
+        <div class="footer1" style="padding-top:605px; display:flex;">
+            <div style="text-align: right">
+                <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                <span style="font-size: 10px;">Page 13 of 17</span>  
+            </div>
+            <div style="text-align: center">
+                <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+            </div>    
+        </div>
+        
+        <!-- Page 14 of 14 -->
+        <div class="page-break"></div>
+
+        <p>
+            &nbsp; &nbsp; &nbsp;
+            <b>IN WITNESS WHEREOF,</b> the parties have executed this Addendum as of the date set forth above.
+        </p>
+        <div class="flex-table">
+            <table class="loose-table">
+                <tr>
+                    <td>Business Associate:</td>
+                    <td class="value">Covered Entity:</td>
+                </tr>
+                <tr>
+                    <td>{!opp.Account_Name__c}</td>
+                    <td class="value">Cardiac Imaging, Inc.</td>
+                </tr>
+                <tr>
+                    <td>By: ___________________________________________</td>
+                    <td class="value">By: _________________________________</td>
+                </tr>
+                <tr>
+                    <td>Name: _________________________________</td>
+                    <td class="value">Name: Sam Kancherlapalli</td>
+                </tr>
+                <tr>
+                    <td>Title:</td>
+                    <td class="value">Title: CEO</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer1" style="padding-top:630px; display:flex;">
+            <div style="text-align: right">
+                <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                <span style="font-size: 10px;">Page 14 of 17</span>  
+            </div>
+            <div style="text-align: center">
+                <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+            </div>    
+        </div>
+
+        <!-- Page 15 of 15 -->
+        <div class="page-break"></div>
+
+        <div class="align-center">
+            <p>
+                <b>ADDENDUM 4</b>
+            </p>
+            <p>
+                <b>Independent Diagnostic Testing Facility (IDTF) Code of Conduct</b>
+            </p>
+            <p>Effective Date: 1/1/2021</p>
+        </div>
+            
+        <p>Cardiac Imaging, Inc. is dedicated to delivering the best possible patient care while shaping and maintaining a culture of
+            professionalism. We rely on our supervising physicians to partner with us to create an environment that values integrity,
+            ethics, and professionalism. This code specifically addresses areas where, as a supervising physician, you and your practice
+            can collaborate with us to foster this environment.
+        </p>
+            
+        <ul class="bullet-list code-of-conduct-list">
+            <li>Cardiac Imaging, Inc.’s communication with patients is limited to providing patient prep instructions, confirming the
+                patient scheduled time of their exam, and communication regarding any financial responsibility the patient may have.
+                All other communication with patients is the responsibility of the supervising physician.</li>
+            <li>Please refer patients directly to Cardiac Imaging, Inc. for any financial matters.</li>
+            <li>Physicians should use appropriate use and clinical necessity guidelines and Cardiac Imaging, Inc. commits to furnishing
+                you with any updated appropriate use criteria released by relevant medical societies.</li>
+            <li>Should the supervising physician need to leave during patient care, he/she will notify our team so we may suspend care
+                until he/she returns to provide the necessary direct supervision services.</li>
+            <li>All medical records for patients referred should be properly stored and be able to retrieve upon request from CMS or
+                its fee-for-service contractor within two (2) business days.</li>
+        </ul>
+        <br/>
+        <br/>
+        <p>
+            <strong>After reviewing our code of conduct, please sign and date below.</strong>
+        </p>
+        <br/>
+        <br/>
+        <br/>
+            
+        <div class="flex-table">
+            <table class="loose-table">
+                <tr>
+                    <td>Print name: {!opp.Signatory__c}</td>
+                </tr>
+                <tr>
+                    <td style="width:400px;">Signed: _______________________________________</td>
+                    <td class="value">Date:</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="footer1" style="padding-top:270px; display:flex;">
+            <div style="text-align: right">
+                <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                <span style="font-size: 10px;">Page 15 of 17</span>  
+            </div>
+            <div style="text-align: center">
+                <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+            </div>    
+        </div>
+
+        <!-- Page 16 of 16 -->
+        <div class="page-break"></div>
+
+        <img src="{!$Resource.Cardiac_PET_Scheduling_Form}" alt="Cardiac PET Scheduling Form" style="width: 100%; height: auto;"/>
+        <p>
+            <strong>Direct Supervision:</strong>
+        </p>
+        <p>
+            I certify that the above hours and activities were actually worked by me. Additionally, the hours shown are for actual direct
+            supervisory services consistent with those required by me in the Agreement. Actual hours will be calculated according
+            to CII policies and final hours may vary based on the application of those policies.
+        </p>
+        <div class="flex-table">
+            <table class="compact-table">
+                <tr>
+                    <td>Physician name : {!opp.Supervising_Physician_Name__c}</td>
+                </tr>
+            </table>
+            <table class="compact-table">
+                <tr>
+                    <td>Physician signature _____________________________________________________</td>
+                    <td class="value">Date __________________</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="footer1" style="padding-top:245px; display:flex;">
+            <div style="text-align: right">
+                <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                <span style="font-size: 10px;">Page 16 of 17</span>  
+            </div>
+            <div style="text-align: center">
+                <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+            </div>    
+        </div>
+
+        <!-- Page 17 of 17 -->
+        <div class="page-break"></div>
+
+        <p>
+            <strong>Cardiac PET QC Form</strong>
+        </p>
+        <br/>
+        <img src="{!$Resource.Cardiac_PET_QC_Form}" alt="Cardiac PET QC Form" style="width: 100%; height: auto;" />
+        
+        <div class="footer1" style="padding-top:315px; display:flex;">
+            <div style="text-align: right">
+                <span style="color: #b5b5b5; margin-right:106px;">Two Trans Am Plaza Drive, Suite 420 | Oakbrook Terrace, Illinois 60181</span> 
+                <span style="font-size: 10px;">Page 17 of 17</span>  
+            </div>
+            <div style="text-align: center">
+                <p style="color: #b5b5b5;">(800) 998-2035 | www.mobilecardiacpet.com</p>  
+            </div>    
+        </div>
+
+    </div>
+</apex:page>
