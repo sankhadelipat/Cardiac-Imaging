@@ -119,7 +119,11 @@ public without sharing class ProcessFileUpload implements Queueable {
         System.debug('### Opportunity Updates: ' + oppUpdates);
 
         if (!oppUpdates.isEmpty()) {
-            update oppUpdates.values();
+            try {
+                update oppUpdates.values();
+            } catch (Exception e) {
+                System.debug('### Error updating Opportunities: ' + e.getMessage());
+            }
         } else {
             System.debug('### No Opportunities to Update.');
         }
